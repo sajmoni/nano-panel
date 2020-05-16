@@ -1,12 +1,23 @@
 import typescript from '@rollup/plugin-typescript'
 
 const OUTPUT_FOLDER = 'dist'
-export default {
-  input: 'src/index.ts',
-  output: {
-    dir: OUTPUT_FOLDER,
-    format: 'cjs',
+export default [
+  {
+    input: 'src/index.ts',
+    output: {
+      dir: OUTPUT_FOLDER,
+      format: 'cjs',
+    },
+    external: [],
+    plugins: [typescript()],
   },
-  external: [],
-  plugins: [typescript()],
-}
+  {
+    input: 'src/storage.ts',
+    output: {
+      dir: OUTPUT_FOLDER,
+      format: 'cjs',
+    },
+    external: [],
+    plugins: [typescript()],
+  },
+]

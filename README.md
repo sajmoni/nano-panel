@@ -12,9 +12,17 @@
 
 ## :sparkles: Features
 
+An overlay for your website that displays any data you want.
+
+ - Possible to minimize.
+
+ - Supports buttons.
+
 ---
 
 ## :wrench: Example usage
+
+TODO
 
 ---
 
@@ -36,11 +44,74 @@ yarn add nano-overlay
 
 ## :newspaper: API
 
-[sayHello](docs/sayHello.md) - Say hello
+The library only has one (default) export.
+
+It takes a list of `items` and returns a `render` function_
+
+```js
+import createOverlay from 'nano-overlay'
+
+const items = [
+  {
+    type: 'label',
+    label: 'Hello',
+    getData: () => 'world',
+  }
+]
+
+const renderOverlay = createOverlay(items)
+
+// Update the overlay every second
+setInterval(renderOverlay, 1000)
+```
+
+### Items
+
+#### `label`
+
+`type`
+
+Either `label`, `button` or `divider`
+
+`label`
+
+A label.
+
+`getData`
+
+This function is called whenever the overlay is re rendered. Needs to return the data to display in the overlay.
+
+`threshold`
+
+TODO: Threshold should be able to be negative?
+
+If the value returned from `getData` is above this value, the text will be red
+
+#### `button`
+
+`type`
+
+Either `label`, `button` or `divider`
+
+`label`
+
+A label.
+
+`onClick`
+
+Called when the button is clicked
+
+`() => void`
+
+#### `divider`
+
+`type`
+
+Either `label`, `button` or `divider`
 
 ---
 
-## :book: Recipes
+[createOverlay](docs/createOverlay.md) - Create the overlay
 
 ---
 
@@ -66,3 +137,4 @@ yarn add nano-overlay
 #### Release
 
 `yarn release`
+RR
