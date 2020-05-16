@@ -1,0 +1,12 @@
+{
+  "name": "example",
+  "private": true,
+  "scripts": {
+    "test": "ava",
+    "refresh": "yarn cache clean && yarn install --force --no-lockfile"
+  },
+  "dependencies": {
+    "nano-overlay": "file:../nano-overlay.tgz",
+    "ava": "3.8.2"
+  }
+}

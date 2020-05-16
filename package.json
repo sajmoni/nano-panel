@@ -1,0 +1,69 @@
+{
+  "name": "nano-overlay",
+  "license": "MIT",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "scripts": {
+    "build": "rm -rf dist && rollup --config rollup.config.js",
+    "test": "ava",
+    "plop": "plop",
+    "release": "np",
+    "release:prepare": "yarn clean && yarn audit && yarn build && np --preview",
+    "clean": "rm -f nano-overlay.tgz",
+    "qa": "yarn tsc && yarn xo --fix",
+    "go": "./build-test.sh"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/"
+  ],
+  "directories": {
+    "example": "example"
+  },
+  "ava": {
+    "require": [
+      "./script/setupTests.js"
+    ]
+  },
+  "prettier": {
+    "trailingComma": "all",
+    "semi": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "bracketSpacing": true
+  },
+  "xo": {
+    "prettier": true,
+    "env": [
+      "es2020",
+      "node"
+    ],
+    "rules": {
+      "unicorn/filename-case": "off",
+      "capitalized-comments": "off",
+      "dot-notation": "off"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test"
+    }
+  },
+  "devDependencies": {
+    "@babel/core": "7.9.6",
+    "@babel/preset-env": "7.9.6",
+    "@babel/preset-typescript": "7.9.0",
+    "@babel/register": "7.9.0",
+    "@rollup/plugin-typescript": "4.1.1",
+    "ava": "3.8.2",
+    "husky": "4.2.5",
+    "lint-staged": "10.2.2",
+    "np": "6.2.3",
+    "plop": "2.6.0",
+    "rollup": "2.10.1",
+    "typescript": "3.9.2",
+    "xo": "0.30.0"
+  }
+}
