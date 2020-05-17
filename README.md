@@ -2,7 +2,7 @@
   nano-overlay
 </h1>
 <h4 align="center">
-    A javascript library
+  Minimal configurable overlay for any website
 </h4>
 
 <div align="center">
@@ -12,17 +12,102 @@
 
 ## :sparkles: Features
 
-An overlay for your website that displays any data you want.
-
- - Possible to minimize.
+ - Possible to minimize. Is remembered between browser refreshes.
 
  - Supports buttons.
 
 ---
 
-## :wrench: Example usage
+## :newspaper: API
 
-TODO
+The library only has one (default) export.
+
+It takes a list of `items` and returns a `render` function:
+
+```js
+import createOverlay from 'nano-overlay'
+
+const items = [
+  {
+    type: 'label',
+    label: 'A random number',
+    getData: () => Math.random().toFixed(3),
+  }
+]
+
+const options = {}
+
+const renderOverlay = createOverlay(items, options)
+
+// Update the overlay every second
+setInterval(renderOverlay, 1000)
+```
+
+### Items
+
+All items have a `type` property, that can be one of: 
+
+ - `label`
+ - `button`
+ - `divider`
+
+Items also have properties specific to their type.
+
+#### `label`
+
+`label`
+
+type: `string`
+
+A label.
+
+`getData`
+
+type: `() => any`
+
+This function is called whenever the overlay is re rendered. Needs to return the data to display in the overlay.
+
+`threshold`
+
+type: `number`
+
+If the value returned from `getData` is above this value, the text will be red
+
+#### `button`
+
+`label`
+
+type: `string`
+
+A label.
+
+`onClick`
+
+type: `() => void`
+
+Called when the button is clicked
+
+#### `divider`
+
+Divider is a horizontal line to divide sections in the overlay.
+
+#### Options
+
+#### `element`
+
+type: `HTMLElement`
+
+default: `document.body`
+
+Where in the DOM to inject the overlay.
+
+#### `width`
+
+type: `number`
+
+default: `130`
+
+The width of the overlay.
 
 ---
 
@@ -39,79 +124,6 @@ npm install nano-overlay
 ```
 yarn add nano-overlay
 ```
-
----
-
-## :newspaper: API
-
-The library only has one (default) export.
-
-It takes a list of `items` and returns a `render` function_
-
-```js
-import createOverlay from 'nano-overlay'
-
-const items = [
-  {
-    type: 'label',
-    label: 'Hello',
-    getData: () => 'world',
-  }
-]
-
-const renderOverlay = createOverlay(items)
-
-// Update the overlay every second
-setInterval(renderOverlay, 1000)
-```
-
-### Items
-
-#### `label`
-
-`type`
-
-Either `label`, `button` or `divider`
-
-`label`
-
-A label.
-
-`getData`
-
-This function is called whenever the overlay is re rendered. Needs to return the data to display in the overlay.
-
-`threshold`
-
-TODO: Threshold should be able to be negative?
-
-If the value returned from `getData` is above this value, the text will be red
-
-#### `button`
-
-`type`
-
-Either `label`, `button` or `divider`
-
-`label`
-
-A label.
-
-`onClick`
-
-Called when the button is clicked
-
-`() => void`
-
-#### `divider`
-
-`type`
-
-Either `label`, `button` or `divider`
-
----
-
-[createOverlay](docs/createOverlay.md) - Create the overlay
 
 ---
 
