@@ -8,7 +8,7 @@
     "build": "rm -rf dist && rollup --config rollup.config.js",
     "test": "ava",
     "plop": "plop",
-    "release:": "yarn clean && yarn audit && yarn build && np --no-tests",
+    "release": "yarn clean && yarn audit && yarn build && np --no-tests",
     "clean": "rm -f nano-overlay.tgz",
     "qa": "yarn tsc && yarn xo --fix",
     "go": "./build-test.sh"
