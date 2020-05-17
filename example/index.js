@@ -1,4 +1,4 @@
-import createOverlay from 'nano-overlay'
+import createPanel from 'nano-panel'
 
 let randomNumber1 = 0
 let randomNumber2 = 0
@@ -35,8 +35,13 @@ const debugItems = [
   },
 ]
 
-const renderDebugOverlay = createOverlay(debugItems)
+const options = {
+  width: 120,
+  element: document.body,
+}
+
+const renderPanel = createPanel(debugItems, options)
 
 setInterval(() => {
-  renderDebugOverlay()
+  renderPanel()
 }, 1000)

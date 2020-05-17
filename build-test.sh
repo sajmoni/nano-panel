@@ -10,7 +10,7 @@ runCommand() {
 
 runCommand "yarn clean"
 runCommand "yarn build"
-runCommand "yarn pack --filename nano-overlay.tgz"
+runCommand "yarn pack --filename nano-panel.tgz"
 runCommand "cd example"
 runCommand "yarn refresh"
 runCommand "yarn start"

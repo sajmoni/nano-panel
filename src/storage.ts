@@ -1,4 +1,4 @@
-const keyPrefix = 'nano-overlay'
+const keyPrefix = 'nano-panel'
 
 const { localStorage } = window
 

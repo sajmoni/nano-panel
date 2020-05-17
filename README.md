@@ -1,22 +1,24 @@
 <h1 align="center">
-  nano-overlay
+  nano-panel
 </h1>
 <h4 align="center">
-  Minimal configurable overlay for any website
+  Minimal configurable debug panel for websites
 </h4>
 
 <div align="center">
-  <img src="https://badgen.net/npm/v/nano-overlay?icon=npm" />
-  <img src="https://badgen.net/bundlephobia/minzip/nano-overlay" />
+  <img src="https://badgen.net/npm/v/nano-panel?icon=npm" />
+  <img src="https://badgen.net/bundlephobia/minzip/nano-panel" />
 </div>
 
 ## :sparkles: Features
 
- - Possible to minimize. The state is remembered between browser refreshes.
+`nano-panel` is used to render information when debugging a website. It will be injected into the DOM and rendered on top of your other content.
 
- - Supports buttons.
+- Possible to minimize. The state is remembered between browser refreshes.
 
- - Zero dependencies.
+- Supports buttons.
+
+- Zero dependencies.
 
 ---
 
@@ -27,31 +29,31 @@ The library only has one (default) export.
 It takes a list of `items` and returns a `render` function:
 
 ```js
-import createOverlay from 'nano-overlay'
+import createPanel from 'nano-panel'
 
 const items = [
   {
     type: 'label',
     label: 'A random number',
     getData: () => Math.random().toFixed(3),
-  }
+  },
 ]
 
 const options = {}
 
-const renderOverlay = createOverlay(items, options)
+const renderPanel = createPanel(items, options)
 
-// Update the overlay every second
-setInterval(renderOverlay, 1000)
+// Update the panel every second
+setInterval(renderPanel, 1000)
 ```
 
 ### Items
 
-All items have a `type` property, that can be one of: 
+All items have a `type` property, that can be one of:
 
- - `label`
- - `button`
- - `divider`
+- `label`
+- `button`
+- `divider`
 
 Items also have properties specific to their type.
 
@@ -67,7 +69,7 @@ A label.
 
 type: `() => any`
 
-This function is called whenever the overlay is re rendered. Needs to return the data to display in the overlay.
+This function is called whenever the panel is re rendered. Needs to return the data to display in the panel.
 
 `threshold`
 
@@ -91,7 +93,7 @@ Called when the button is clicked
 
 #### divider
 
-Divider is a horizontal line to divide sections in the overlay.
+Divider is a horizontal line to divide sections in the panel.
 
 ---
 
@@ -103,7 +105,7 @@ type: `HTMLElement`
 
 default: `document.body`
 
-Where in the DOM to inject the overlay.
+Where in the DOM to inject the panel.
 
 #### width
 
@@ -111,7 +113,7 @@ type: `number`
 
 default: `130`
 
-The width of the overlay.
+The width of the panel.
 
 ---
 
@@ -120,13 +122,13 @@ The width of the overlay.
 **npm**
 
 ```
-npm install nano-overlay
+npm install nano-panel
 ```
 
 **yarn**
 
 ```
-yarn add nano-overlay
+yarn add nano-panel
 ```
 
 ---
@@ -146,7 +148,7 @@ yarn add nano-overlay
 ### Workflow
 
 1. Make changes
-2. Update tests 
+2. Update tests
 3. `yarn go` and verify that your changes work.
 4. Commit to `master` or make `PR`
 

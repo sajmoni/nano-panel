@@ -1,5 +1,5 @@
 {
-  "name": "nano-overlay",
+  "name": "nano-panel",
   "license": "MIT",
   "version": "0.0.0",
   "description": "",
@@ -9,7 +9,7 @@
     "test": "ava",
     "plop": "plop",
     "release": "yarn clean && yarn audit && yarn build && np --no-tests",
-    "clean": "rm -f nano-overlay.tgz",
+    "clean": "rm -f nano-panel.tgz",
     "qa": "yarn tsc && yarn xo --fix",
     "go": "./build-test.sh"
   },

@@ -6,7 +6,7 @@
     "refresh": "yarn cache clean && yarn install --force --no-lockfile"
   },
   "dependencies": {
-    "nano-overlay": "file:../nano-overlay.tgz"
+    "nano-panel": "file:../nano-panel.tgz"
   },
   "devDependencies": {
     "parcel": "1.12.4"
