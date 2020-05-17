@@ -12,9 +12,11 @@
 
 ## :sparkles: Features
 
- - Possible to minimize. Is remembered between browser refreshes.
+ - Possible to minimize. The state is remembered between browser refreshes.
 
  - Supports buttons.
+
+ - Zero dependencies.
 
 ---
 
@@ -53,7 +55,7 @@ All items have a `type` property, that can be one of:
 
 Items also have properties specific to their type.
 
-#### `label`
+#### label
 
 `label`
 
@@ -73,7 +75,7 @@ type: `number`
 
 If the value returned from `getData` is above this value, the text will be red
 
-#### `button`
+#### button
 
 `label`
 
@@ -87,13 +89,15 @@ type: `() => void`
 
 Called when the button is clicked
 
-#### `divider`
+#### divider
 
 Divider is a horizontal line to divide sections in the overlay.
 
-#### Options
+---
 
-#### `element`
+### Options
+
+#### element
 
 type: `HTMLElement`
 
@@ -101,7 +105,7 @@ default: `document.body`
 
 Where in the DOM to inject the overlay.
 
-#### `width`
+#### width
 
 type: `number`
 
