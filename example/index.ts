@@ -1,7 +1,7 @@
 import createPanel from 'nano-panel'
 
-let randomNumber1 = 0
-let randomNumber2 = 0
+let randomNumber1 = ''
+let randomNumber2 = ''
 
 setInterval(() => {
   randomNumber1 = (Math.random() * 10).toFixed(3)
