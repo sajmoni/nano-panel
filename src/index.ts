@@ -87,7 +87,7 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
 
   const elements = items.map((item: Item) => {
     const { type } = item
-    if (type === 'button') {
+    if (type === ItemType.BUTTON) {
       const { onClick, label } = item as Button
       const element = createButton({ onClick, label })
       container.append(element)
@@ -98,7 +98,7 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
       }
     }
 
-    if (type === 'divider') {
+    if (type === ItemType.DIVIDER) {
       const element = document.createElement('div')
       element.style.height = '1px'
       element.style.backgroundColor = 'lightgray'
@@ -176,7 +176,8 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
   const render = () => {
     elements.forEach((element) => {
       const { item, valueElement } = element
-      if (item.type === 'label') {
+
+      if (item.type === ItemType.LABEL) {
         const { getData, threshold } = item as Label
         const data = getData()
         // @ts-expect-error

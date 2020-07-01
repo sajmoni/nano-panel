@@ -11,11 +11,21 @@ setInterval(() => {
   randomNumber2 = Math.random().toFixed(3)
 }, 500)
 
-// const spector = new SPECTOR.Spector()
 const debugItems = [
-  { label: 'Number 1', getData: () => randomNumber1, threshold: 5 },
-  { label: 'Number 2', getData: () => randomNumber2 },
-  { label: 'A label which is too long to fit', getData: () => 'Hi!' },
+  {
+    type: 'label',
+    label: 'Number 1',
+    getData: () => {
+      return randomNumber1
+    },
+    threshold: 5,
+  },
+  { type: 'label', label: 'Number 2', getData: () => randomNumber2 },
+  {
+    type: 'label',
+    label: 'A label which is too long to fit',
+    getData: () => 'Hi!',
+  },
   {
     type: 'divider',
   },

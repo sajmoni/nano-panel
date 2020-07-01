@@ -59,6 +59,10 @@ Items also have properties specific to their type.
 
 #### label
 
+Renders any data.
+
+Properties:
+
 `label`
 
 type: `string`
@@ -69,7 +73,7 @@ A label.
 
 type: `() => any`
 
-This function is called whenever the panel is re rendered. Needs to return the data to display in the panel.
+This function is called whenever the panel is re-rendered. Needs to return the data to display in the panel.
 
 `threshold`
 
@@ -78,6 +82,8 @@ type: `number`
 If the value returned from `getData` is above this value, the text will be red
 
 #### button
+
+Properties:
 
 `label`
 
@@ -93,7 +99,7 @@ Called when the button is clicked
 
 #### divider
 
-Divider is a horizontal line to divide sections in the panel.
+A horizontal line to divide sections in the panel.
 
 ---
 
@@ -155,4 +161,3 @@ yarn add nano-panel
 #### Release
 
 `yarn release`
-RR
