@@ -39,7 +39,7 @@ enum ItemType {
 type Item = {
   readonly label: string
   readonly getData: () => number | string
-  readonly threshold?: string
+  readonly threshold?: number
   readonly type: ItemType
   readonly onClick: () => void
 }
