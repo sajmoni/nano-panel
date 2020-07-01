@@ -45,14 +45,13 @@
     }
   },
   "devDependencies": {
-    "@babel/preset-typescript": "7.9.0",
-    "@rollup/plugin-typescript": "4.1.1",
+    "@rollup/plugin-typescript": "5.0.1",
     "husky": "4.2.5",
-    "lint-staged": "10.2.2",
-    "np": "6.2.3",
-    "plop": "2.6.0",
-    "rollup": "2.10.2",
-    "typescript": "3.9.2",
-    "xo": "0.30.0"
+    "lint-staged": "10.2.11",
+    "np": "6.2.5",
+    "plop": "2.7.1",
+    "rollup": "2.18.1",
+    "typescript": "3.9.5",
+    "xo": "0.32.0"
   }
 }
