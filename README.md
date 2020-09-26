@@ -24,7 +24,7 @@
 
 ## :newspaper: API
 
-The library only has one (default) export.
+The library exports a `createPanel` function as a default export.
 
 It takes a list of `items` and returns a `render` function:
 

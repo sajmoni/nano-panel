@@ -1,4 +1,4 @@
-import createPanel from 'nano-panel'
+import createPanel, { PanelItem } from 'nano-panel'
 
 let randomNumber1 = ''
 let randomNumber2 = ''
@@ -11,7 +11,7 @@ setInterval(() => {
   randomNumber2 = Math.random().toFixed(3)
 }, 500)
 
-const debugItems = [
+const debugItems: PanelItem[] = [
   {
     type: 'label',
     label: 'Number 1',

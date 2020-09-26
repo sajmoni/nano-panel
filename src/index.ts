@@ -37,7 +37,7 @@ enum ItemType {
 }
 
 type BaseItem = {
-  readonly type: ItemType
+  readonly type: 'label' | 'button' | 'divider'
 }
 
 type Label = BaseItem & {
@@ -51,9 +51,9 @@ type Button = BaseItem & {
   readonly label: string
 }
 
-type Divider = Record<string, unknown>
+type Divider = BaseItem
 
-type Item = Label | Button | Divider
+export type PanelItem = Label | Button | Divider
 
 type Options = {
   readonly element?: HTMLElement
@@ -80,8 +80,8 @@ const createContainer = ({ width }: { width: number }) => {
   return container
 }
 
-const createElements = (items: readonly Item[]) => {
-  return items.map((item: Item) => {
+const createElements = (items: readonly PanelItem[]) => {
+  return items.map((item: PanelItem) => {
     const { type } = item
     if (type === ItemType.BUTTON) {
       const { onClick, label } = item as Button
@@ -106,37 +106,44 @@ const createElements = (items: readonly Item[]) => {
       }
     }
 
-    const { getData, label } = item as Label
+    if (type === ItemType.LABEL) {
+      const { getData, label } = item as Label
 
-    const element = document.createElement('div')
-    element.style.display = 'flex'
+      const element = document.createElement('div')
+      element.style.display = 'flex'
 
-    const labelElement = document.createElement('div')
-    labelElement.innerHTML = `${label}: `
-    labelElement.style.color = 'lightgray'
-    labelElement.style.width = '75%'
-    labelElement.style.textAlign = 'right'
-    labelElement.style.marginRight = '5px'
-    labelElement.style.textOverflow = 'ellipsis'
-    labelElement.style.whiteSpace = 'nowrap'
-    labelElement.style.overflow = 'hidden'
-    element.append(labelElement)
+      const labelElement = document.createElement('div')
+      labelElement.innerHTML = `${label}: `
+      labelElement.style.color = 'lightgray'
+      labelElement.style.width = '75%'
+      labelElement.style.textAlign = 'right'
+      labelElement.style.marginRight = '5px'
+      labelElement.style.textOverflow = 'ellipsis'
+      labelElement.style.whiteSpace = 'nowrap'
+      labelElement.style.overflow = 'hidden'
+      element.append(labelElement)
 
-    const valueElement = document.createElement('div')
-    valueElement.innerHTML = `${getData() || '-'}`
-    valueElement.style.fontWeight = `bold`
-    element.append(valueElement)
+      const valueElement = document.createElement('div')
+      valueElement.innerHTML = `${getData() || '-'}`
+      valueElement.style.fontWeight = `bold`
+      element.append(valueElement)
 
-    return {
-      item,
-      element,
-      labelElement,
-      valueElement,
+      return {
+        item,
+        element,
+        labelElement,
+        valueElement,
+      }
     }
+
+    throw new Error(`nano-panel: Unknown PanelItem, ${type}`)
   })
 }
 
-const createPanel = (items: readonly Item[], options: Options = {}): render => {
+const createPanel = (
+  items: readonly PanelItem[],
+  options: Options = {},
+): render => {
   const { element: appendTo = document.body, width = 130 } = options
 
   const container = createContainer({ width })
