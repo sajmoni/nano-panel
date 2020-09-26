@@ -62,12 +62,8 @@ type Options = {
 
 type render = () => void
 
-// TODO: disable @typescript-eslint/prefer-readonly-parameter-types
-const createPanel = (items: readonly Item[], options: Options = {}): render => {
-  const { element: appendTo = document.body, width = 130 } = options
-
+const createContainer = ({ width }: { width: number }) => {
   const container = document.createElement('div')
-  appendTo.append(container)
   container.style.backgroundColor = 'rgba(0,0,0,0.8)'
   container.style.position = 'absolute'
   container.style.top = '0px'
@@ -81,16 +77,15 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
   container.style.display = `flex`
   container.style.flexDirection = `column`
 
-  const header = createButton({ label: 'Hide debug' })
-  header.style.alignSelf = 'flex-start'
-  container.append(header)
+  return container
+}
 
-  const elements = items.map((item: Item) => {
+const createElements = (items: readonly Item[]) => {
+  return items.map((item: Item) => {
     const { type } = item
     if (type === ItemType.BUTTON) {
       const { onClick, label } = item as Button
       const element = createButton({ onClick, label })
-      container.append(element)
       return {
         item,
         element,
@@ -104,7 +99,6 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
       element.style.backgroundColor = 'lightgray'
       element.style.width = '95%'
       element.style.margin = '5px 0'
-      container.append(element)
       return {
         item,
         element,
@@ -133,14 +127,28 @@ const createPanel = (items: readonly Item[], options: Options = {}): render => {
     valueElement.style.fontWeight = `bold`
     element.append(valueElement)
 
-    container.append(element)
-
     return {
       item,
       element,
       labelElement,
       valueElement,
     }
+  })
+}
+
+const createPanel = (items: readonly Item[], options: Options = {}): render => {
+  const { element: appendTo = document.body, width = 130 } = options
+
+  const container = createContainer({ width })
+  appendTo.append(container)
+
+  const header = createButton({ label: 'Hide debug' })
+  header.style.alignSelf = 'flex-start'
+  container.append(header)
+
+  const elements = createElements(items)
+  elements.forEach(({ element }) => {
+    container.append(element)
   })
 
   const renderElements = () => {
