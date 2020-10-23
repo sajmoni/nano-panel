@@ -34,10 +34,11 @@ enum ItemType {
   LABEL = 'label',
   BUTTON = 'button',
   DIVIDER = 'divider',
+  CHECK_BOX = 'checkBox',
 }
 
 type BaseItem = {
-  readonly type: 'label' | 'button' | 'divider'
+  readonly type: 'label' | 'button' | 'divider' | 'checkBox'
 }
 
 type Label = BaseItem & {
@@ -53,7 +54,12 @@ type Button = BaseItem & {
 
 type Divider = BaseItem
 
-export type PanelItem = Label | Button | Divider
+type CheckBox = BaseItem & {
+  readonly label: string
+  readonly onClick: (checked: boolean) => void
+}
+
+export type PanelItem = Label | Button | Divider | CheckBox
 
 type Options = {
   readonly element?: HTMLElement
@@ -106,6 +112,31 @@ const createElements = (items: readonly PanelItem[]) => {
       }
     }
 
+    if (type === ItemType.CHECK_BOX) {
+      const { onClick, label } = item as CheckBox
+      const element = document.createElement('div')
+      element.style.display = 'flex'
+      if (onClick) {
+        element.addEventListener('click', (event) => {
+          onClick(Boolean(event?.target))
+        })
+      }
+
+      const checkBox = document.createElement('div')
+
+      element.append(checkBox)
+
+      const labelElement = document.createElement('div')
+      labelElement.innerHTML = `${label}: `
+      element.append(label)
+
+      return {
+        item,
+        element,
+        valueElement: null,
+      }
+    }
+
     if (type === ItemType.LABEL) {
       const { getData, label } = item as Label
 
@@ -136,6 +167,7 @@ const createElements = (items: readonly PanelItem[]) => {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     throw new Error(`nano-panel: Unknown PanelItem, ${type}`)
   })
 }

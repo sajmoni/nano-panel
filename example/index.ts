@@ -30,6 +30,20 @@ const debugItems: PanelItem[] = [
     type: 'divider',
   },
   {
+    type: 'checkBox',
+    label: 'Turbo',
+    onClick: (checked) => {
+      if (checked) {
+        console.log('starting turbo mode')
+      } else {
+        console.log('leaving turbo mode')
+      }
+    },
+  },
+  {
+    type: 'divider',
+  },
+  {
     type: 'button',
     label: 'Console log',
     onClick: () => {
