@@ -7,47 +7,62 @@ import useMountedState from './useMountedState'
 
 const STORAGE_KEY = 'debug'
 
-const StyledLabel = styled.div<{ color: string }>`
+enum Color {
+  GREEN = '#007546',
+}
+
+const ValueContainer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
+  display: flex;
+`
+
+const StyledLabel = styled.div`
   text-align: right;
+  width: 75%;
+  margin-right: 5px;
+  align-self: flex-end;
+  font-size: 12px;
+
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 `
 
+// TODO: Limit the width of this
 const StyledValue = styled.div`
   font-weight: bold;
+  font-size: 14px;
 `
 
-// TODO: Enable controlling this in user land
-const UPDATE_INTERVAL = 2000
+const DEFAULT_UPDATE_INTERVAL = 1000
 
-export const Label: React.FC<{
+export const NumericValue: React.FC<{
   label: string
-  getData: () => number | string
+  getValue: () => number
+  updateInterval?: number
   warnAt?: {
     value: number
     when?: 'above' | 'below'
   }
 }> = ({
   label,
-  getData,
+  getValue,
+  updateInterval = DEFAULT_UPDATE_INTERVAL,
   warnAt: { value: warnAtValue, when = 'above' } = {},
 }) => {
-  const [value, setValue] = useState<number | string>('-')
+  // TODO: Other default value
+  const [value, setValue] = useState<number>(-999)
   const isMounted = useMountedState()
 
-  // Will log warning when minimized
   useEffect(() => {
-    setValue(getData())
+    setValue(getValue())
     setInterval(() => {
       if (isMounted()) {
-        setValue(getData())
+        setValue(getValue())
       }
-    }, UPDATE_INTERVAL)
+    }, updateInterval)
   }, [])
 
-  // TODO: Only do  this for numeric values
   const getTextColor = () => {
     if (!warnAtValue) {
       return 'lightgray'
@@ -65,9 +80,33 @@ export const Label: React.FC<{
   }
 
   return (
-    <StyledLabel color={getTextColor()}>
-      {label}: <StyledValue>{value}</StyledValue>
-    </StyledLabel>
+    <ValueContainer color={getTextColor()}>
+      <StyledLabel>{label}</StyledLabel> <StyledValue>{value}</StyledValue>
+    </ValueContainer>
+  )
+}
+
+export const StringValue: React.FC<{
+  label: string
+  getValue: () => string
+  updateInterval?: number
+}> = ({ label, getValue, updateInterval = DEFAULT_UPDATE_INTERVAL }) => {
+  const [value, setValue] = useState<string>('-')
+  const isMounted = useMountedState()
+
+  useEffect(() => {
+    setValue(getValue())
+    setInterval(() => {
+      if (isMounted()) {
+        setValue(getValue())
+      }
+    }, updateInterval)
+  }, [])
+
+  return (
+    <ValueContainer color={'lightgray'}>
+      <StyledLabel>{label}</StyledLabel> <StyledValue>{value}</StyledValue>
+    </ValueContainer>
   )
 }
 
@@ -113,7 +152,8 @@ export const Checkbox: React.FC<{
 }
 
 const StyledContainer = styled.div<{ width?: number }>`
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: ${Color.GREEN};
+  opacity: 0.8;
   position: absolute;
   top: 0px;
   padding: 4px;

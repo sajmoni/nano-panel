@@ -1,17 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import renderPanel, { Label, Divider, Button } from 'nano-panel'
+import renderPanel, {
+  NumericValue,
+  StringValue,
+  Divider,
+  Button,
+} from 'nano-panel'
 
-let randomNumber1 = (Math.random() * 10).toFixed(3)
-let randomNumber2 = Math.random().toFixed(3)
+let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
+let randomNumber2 = Number.parseFloat(Math.random().toFixed(3))
 
 // Emulating state changing in a game
 setInterval(() => {
-  randomNumber1 = (Math.random() * 10).toFixed(3)
+  randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
 }, 500)
 
 setInterval(() => {
-  randomNumber2 = Math.random().toFixed(3)
+  randomNumber2 = Number.parseFloat(Math.random().toFixed(3))
 }, 500)
 
 const Panel = () => {
@@ -19,23 +24,24 @@ const Panel = () => {
 
   return (
     <>
-      <Label
-        label={'Number 1'}
+      <NumericValue
+        label={'A number'}
         warnAt={{ value: 5 }}
-        getData={() => {
+        getValue={() => {
           return randomNumber1
         }}
       />
-      <Label
-        label={'Number 2'}
+      <NumericValue
+        label={'Fast update'}
+        updateInterval={250}
         warnAt={{ value: 0.5, when: 'below' }}
-        getData={() => {
+        getValue={() => {
           return randomNumber2
         }}
       />
-      <Label
+      <StringValue
         label={'A label which is too long to fit'}
-        getData={() => {
+        getValue={() => {
           return 'Hi!'
         }}
       />

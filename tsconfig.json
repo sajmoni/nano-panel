@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
+    "types": ["react", "react-dom", "styled-components"],
     "target": "ES2017",
     "module": "commonjs",
     "strict": true,
