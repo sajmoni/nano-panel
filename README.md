@@ -12,78 +12,70 @@
 
 ## :sparkles: Features
 
-`nano-panel` is used to render information when debugging a website. It will be injected into the DOM and rendered on top of your other content.
+`nano-panel` is used to render information when debugging a website. It injects itself into the DOM and renders on top of your other content.
 
-- Possible to minimize. The state is remembered between browser refreshes.
+  - React based
 
-- Supports buttons.
+  - Comes with built-in components
 
-- Zero dependencies.
+  - Easy to extend
+
+  - Possible to minimize. The state is remembered between browser refreshes.
 
 ---
 
 ## :newspaper: API
 
-The library exports a `createPanel` function as a default export.
+The library exports a `renderPanel` function as a default export.
 
-It takes a list of `items` and returns a `render` function:
+It takes a React component and an HTML element to inject the panel into.
 
-```js
-import createPanel from 'nano-panel'
-
-const items = [
-  {
-    type: 'label',
-    label: 'A random number',
-    getData: () => Math.random().toFixed(3),
-  },
-]
+```jsx
+import renderPanel, { NumericValue } from 'nano-panel'
 
 const options = {}
 
-const renderPanel = createPanel(items, options)
-
-// Update the panel every second
-setInterval(renderPanel, 1000)
+const renderPanel = renderPanel((
+  <>
+    <NumericValue 
+      label={'A random number'}
+      getValue={() => Number.parseFloat(Math.random().toFixed(3))}
+    />
+  </>
+), document.getElementById('debug-panel'))
 ```
 
-### Items
+### Components
 
-All items have a `type` property, that can be one of:
+#### NumericValue
 
-- `label`
-- `button`
-- `divider`
+Renders a `number` with a label.
 
-Items also have properties specific to their type.
+<!-- TODO: Show gif -->
 
-#### label
-
-Renders any data.
-
-Properties:
+Props:
 
 `label`
 
 type: `string`
 
-A label.
+A label that describes the value.
 
-`getData`
+`getValue`
 
-type: `() => any`
+type: `() => number`
 
-This function is called whenever the panel is re-rendered. Needs to return the data to display in the panel.
+This function is called once every second. Needs to return the data to display in the panel.
 
-`threshold`
+`warnAt`
 
-type: `number`
+type: `object`
 
-If the value returned from `getData` is above this value, the text will be red
+If the value returned from `getValue` is above this value, the text will be red
 
-#### button
+#### Button
 
-Properties:
+Props:
 
 `label`
 
@@ -97,7 +89,7 @@ type: `() => void`
 
 Called when the button is clicked
 
-#### divider
+#### Divider
 
 A horizontal line to divide sections in the panel.
 
