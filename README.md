@@ -12,114 +12,113 @@
 
 ## :sparkles: Features
 
-`nano-panel` is used to render information when debugging a website. It will be injected into the DOM and rendered on top of your other content.
+`nano-panel` is used to render information when debugging a website. It injects itself into the DOM and renders on top of your other content.
 
-- Possible to minimize. The state is remembered between browser refreshes.
+  - Uses React
 
-- Supports buttons.
+  - Has built-in components
 
-- Zero dependencies.
+  - Easy to extend
 
+  - Possible to minimize. The state is remembered between browser refreshes.
 ---
 
 ## :newspaper: API
 
-The library exports a `createPanel` function as a default export.
+The library exports a `renderPanel` function as a default export.
 
-It takes a list of `items` and returns a `render` function:
+It takes a React component and an HTML element to inject the panel into.
 
-```js
-import createPanel from 'nano-panel'
+```jsx
+import renderPanel, { NumericValue } from 'nano-panel'
 
-const items = [
-  {
-    type: 'label',
-    label: 'A random number',
-    getData: () => Math.random().toFixed(3),
-  },
-]
-
-const options = {}
-
-const renderPanel = createPanel(items, options)
-
-// Update the panel every second
-setInterval(renderPanel, 1000)
+renderPanel((
+  <>
+    <NumericValue 
+      label={'A number'}
+      getValue={() => 3}
+    />
+  </>
+), document.getElementById('debug-panel'))
 ```
 
-### Items
+## Components
 
-All items have a `type` property, that can be one of:
+### NumericValue
 
-- `label`
-- `button`
-- `divider`
+Renders a `number` with a label.
 
-Items also have properties specific to their type.
+<!-- TODO: Show gif -->
 
-#### label
+Props:
 
-Renders any data.
-
-Properties:
-
-`label`
+**`label`**
 
 type: `string`
 
-A label.
+**`getValue`**
 
-`getData`
+type: `() => number`
 
-type: `() => any`
+This function is called once every second. Needs to return the data to display in the panel.
 
-This function is called whenever the panel is re-rendered. Needs to return the data to display in the panel.
+**`warnAt`** *(optional)*
 
-`threshold`
+type: `object`
+
+Fields:
+
+**`value`**
 
 type: `number`
 
-If the value returned from `getData` is above this value, the text will be red
+If the value returned from `getValue` is above this value, the text will be red.
 
-#### button
+**`when`**
 
-Properties:
+type: `"above"` (default) or `"below"`
 
-`label`
-
-type: `string`
-
-A label.
-
-`onClick`
-
-type: `() => void`
-
-Called when the button is clicked
-
-#### divider
-
-A horizontal line to divide sections in the panel.
+If `below`, will warn when value goes under that number.
 
 ---
 
-### Options
+### StringValue
 
-#### element
+Renders a `string` with a label.
 
-type: `HTMLElement`
+<!-- TODO: Show gif -->
 
-default: `document.body`
+Props:
 
-Where in the DOM to inject the panel.
+**`label`**
 
-#### width
+type: `string`
 
-type: `number`
+**`getValue`**
 
-default: `130`
+type: `() => string`
 
-The width of the panel.
+This function is called once every second. Needs to return the data to display in the panel.
+
+---
+
+### Button
+
+Props:
+
+**`label`**
+
+type: `string`
+
+**`onClick`**
+
+type: `() => void`
+
+---
+
+### Divider
+
+A horizontal line to divide sections in the panel.
 
 ---
 

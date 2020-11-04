@@ -6,7 +6,9 @@
     "refresh": "yarn cache clean && yarn install --force --no-lockfile"
   },
   "dependencies": {
-    "nano-panel": "file:../nano-panel.tgz"
+    "nano-panel": "file:../nano-panel.tgz",
+    "react": "17.0.1",
+    "react-dom": "17.0.1"
   },
   "devDependencies": {
     "parcel": "1.12.4"

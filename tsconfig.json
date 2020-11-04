@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "checkJs": true,
+    "types": ["react", "react-dom", "styled-components"],
     "target": "ES2017",
     "module": "commonjs",
     "strict": true,
+    "jsx": "react",
     "declaration": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
