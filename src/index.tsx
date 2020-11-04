@@ -142,13 +142,53 @@ export const Divider: React.FC = () => {
   return <StyledDivider></StyledDivider>
 }
 
-const StyledCheckbox = styled.div``
+const StyledCheckbox = styled.div`
+  width: 16px;
+  height: 16px;
+
+  border: 4px solid darkgray;
+  border-radius: 6px;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 2px;
+
+  box-shadow: 1px 1px 1px 1px black;
+`
+
+const EnabledIndicator = styled.div<{ checked: boolean }>`
+  width: 8px;
+  height: 8px;
+  background-color: ${({ checked }) => (checked ? 'darkgray' : 'transparent')};
+`
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export const Checkbox: React.FC<{
   label: string
   onClick: (checked: boolean) => void
-}> = () => {
-  return <StyledCheckbox></StyledCheckbox>
+}> = ({ label, onClick }) => {
+  const [checked, setChecked] = useState(false)
+
+  return (
+    <CheckboxContainer>
+      <StyledCheckbox
+        onClick={() => {
+          const newValue = !checked
+          setChecked(newValue)
+          onClick(newValue)
+        }}
+      >
+        <EnabledIndicator checked={checked} />
+      </StyledCheckbox>
+      <div>{label}</div>
+    </CheckboxContainer>
+  )
 }
 
 const StyledContainer = styled.div<{ width?: number }>`

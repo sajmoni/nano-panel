@@ -4,6 +4,7 @@ import renderPanel, {
   StringValue,
   Divider,
   Button,
+  Checkbox,
 } from 'nano-panel'
 
 let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
@@ -53,6 +54,12 @@ const Panel = () => {
         label={'Another log'}
         onClick={() => {
           console.log('Hello again!')
+        }}
+      />
+      <Checkbox
+        label={'Something'}
+        onClick={(checked) => {
+          console.log('checked', checked)
         }}
       />
     </>
