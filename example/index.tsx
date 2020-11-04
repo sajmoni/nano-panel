@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import renderPanel, {
   NumericValue,
   StringValue,
@@ -20,8 +19,6 @@ setInterval(() => {
 }, 500)
 
 const Panel = () => {
-  // const [state, dispatch] = useReducer(() => {}, {})
-
   return (
     <>
       <NumericValue

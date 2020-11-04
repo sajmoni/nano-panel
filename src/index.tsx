@@ -162,7 +162,7 @@ const StyledContainer = styled.div<{ width?: number }>`
   font-family: Helvetica;
   font-size: 10px;
   user-select: none;
-  min-width: ${({ width = 200 }) => width}px;
+  width: ${({ width = 200 }) => width}px;
   display: flex;
   flex-direction: column;
 `
@@ -182,7 +182,7 @@ const Container = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <StyledContainer>
+    <StyledContainer width={isMinimized ? 60 : undefined}>
       <MinimizeButton
         onClick={() => {
           setIsMinimized(!isMinimized)
