@@ -191,6 +191,96 @@ export const Checkbox: React.FC<{
   )
 }
 
+type DropdownItem = {
+  label: string
+  value: string | number
+}
+
+const DropdownContainer = styled.div`
+  margin: 10px 0;
+`
+
+const DropdownLabel = styled.div<{
+  bold: boolean
+}>`
+  cursor: pointer;
+  ${({ bold }) => (bold ? 'font-weight: bold;' : undefined)}
+  &:hover {
+    opacity: 0.5;
+  }
+`
+
+const ArrowDown = styled.div`
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+
+  border-top: 10px solid gray;
+`
+
+const SelectedValue = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+  cursor: pointer;
+  padding: 5px;
+
+  border: 2px solid white;
+  border-radius: 4px;
+  box-shadow: 1px 1px 1px 1px black;
+`
+
+type DropdownProps = {
+  items: DropdownItem[]
+  initialValue?: string | number
+  onChange: (value: string | number) => void
+  dropdownLabel?: string
+  description?: string
+}
+
+export const Dropdown = ({
+  items,
+  onChange,
+  initialValue,
+  dropdownLabel,
+  description,
+}: DropdownProps) => {
+  const [open, setOpen] = useState(false)
+  const [selectedValue, setSelectedValue] = useState(initialValue)
+
+  return (
+    <DropdownContainer>
+      <div>{dropdownLabel}</div>
+      <SelectedValue
+        onClick={() => {
+          setOpen(!open)
+        }}
+      >
+        {selectedValue ?? '-'}
+        <ArrowDown />
+      </SelectedValue>
+      {open
+        ? items.map(({ label, value }) => {
+            return (
+              <DropdownLabel
+                bold={value === selectedValue}
+                key={value}
+                onClick={() => {
+                  onChange(value)
+                  setSelectedValue(value)
+                  setOpen(false)
+                }}
+              >
+                {label}
+              </DropdownLabel>
+            )
+          })
+        : null}
+    </DropdownContainer>
+  )
+}
+
 const StyledContainer = styled.div<{ width?: number }>`
   background-color: ${Color.GREEN};
   opacity: 0.8;

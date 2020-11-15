@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import renderPanel, {
   NumericValue,
   StringValue,
   Divider,
   Button,
   Checkbox,
+  Dropdown,
 } from 'nano-panel'
 
 let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
@@ -61,6 +62,17 @@ const Panel = () => {
         onClick={(checked) => {
           console.log('checked', checked)
         }}
+      />
+      <Dropdown
+        initialValue={'test2'}
+        dropdownLabel={'Pick an item'}
+        onChange={(value) => {
+          console.log('dropdown value changed', value)
+        }}
+        items={[
+          { label: 'test', value: 'test' },
+          { label: 'test2', value: 'test2' },
+        ]}
       />
     </>
   )
