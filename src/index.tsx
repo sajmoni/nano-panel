@@ -5,11 +5,20 @@ import styled, { css } from 'styled-components'
 import { save, restore } from './storage'
 import useMountedState from './useMountedState'
 
-const STORAGE_KEY = 'debug'
+const STORAGE_KEY = 'nano-panel'
 
 enum Color {
   GREEN = '#007546',
+  BLACK = '#000000',
 }
+
+const defaultBoxShadow = css`
+  box-shadow: 1px 1px 1px 1px black;
+`
+
+const defaultComponentMargin = css`
+  margin: 5px 0;
+`
 
 const ValueContainer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
@@ -118,16 +127,14 @@ export const StringValue: React.FC<{
 
 const StyledButton = styled.button`
   cursor: pointer;
-  display: block;
-  font-family: Helvetica;
-  font-size: 10px;
-  width: 70px;
-  align-self: flex-start;
-  margin: 2px 0;
-  padding: 0;
+
+  width: max-content;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
+  ${defaultComponentMargin};
 `
 
 export const Button: React.FC<{
@@ -142,6 +149,7 @@ const StyledDivider = styled.div`
   background-color: lightgray;
   width: 95%;
   margin: 5px 0;
+  ${defaultBoxShadow};
 `
 
 export const Divider: React.FC = () => {
@@ -154,14 +162,13 @@ const StyledCheckbox = styled.div`
 
   border: 4px solid darkgray;
   border-radius: 6px;
-  cursor: pointer;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 2px;
+  margin-right: 5px;
 
-  box-shadow: 1px 1px 1px 1px black;
+  ${defaultBoxShadow};
 `
 
 const EnabledIndicator = styled.div<{ checked: boolean }>`
@@ -173,6 +180,10 @@ const EnabledIndicator = styled.div<{ checked: boolean }>`
 const CheckboxContainer = styled.div`
   display: flex;
   align-items: center;
+
+  cursor: pointer;
+
+  ${defaultComponentMargin};
 `
 
 export const Checkbox: React.FC<{
@@ -182,14 +193,14 @@ export const Checkbox: React.FC<{
   const [checked, setChecked] = useState(false)
 
   return (
-    <CheckboxContainer>
-      <StyledCheckbox
-        onClick={() => {
-          const newValue = !checked
-          setChecked(newValue)
-          onClick(newValue)
-        }}
-      >
+    <CheckboxContainer
+      onClick={() => {
+        const newValue = !checked
+        setChecked(newValue)
+        onClick(newValue)
+      }}
+    >
+      <StyledCheckbox>
         <EnabledIndicator checked={checked} />
       </StyledCheckbox>
       <div>{label}</div>
@@ -203,13 +214,15 @@ type DropdownItem = {
 }
 
 const DropdownContainer = styled.div`
-  margin: 10px 0;
+  ${defaultComponentMargin};
 `
 
-const DropdownLabel = styled.div<{
+const DropdownItem = styled.div<{
   bold: boolean
 }>`
   cursor: pointer;
+  margin: 2px;
+
   ${({ bold }) => (bold ? 'font-weight: bold;' : undefined)}
   &:hover {
     opacity: 0.5;
@@ -222,19 +235,29 @@ const ArrowDown = styled.div`
   border-left: 10px solid transparent;
   border-right: 10px solid transparent;
 
-  border-top: 10px solid gray;
+  border-top: 10px solid white;
 `
+
+const DROPDOWN_WIDTH = `100px`
 
 const SelectedValue = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100px;
+  width: ${DROPDOWN_WIDTH};
   cursor: pointer;
   padding: 5px;
 
   border: 2px solid white;
   border-radius: 4px;
-  box-shadow: 1px 1px 1px 1px black;
+
+  ${defaultBoxShadow};
+`
+
+const DropdownItemsContainer = styled.div`
+  border: 1px solid white;
+  border-radius: 4px;
+
+  width: ${DROPDOWN_WIDTH};
 `
 
 type DropdownProps = {
@@ -266,10 +289,12 @@ export const Dropdown = ({
         {selectedValue ?? '-'}
         <ArrowDown />
       </SelectedValue>
-      {open
-        ? items.map(({ label, value }) => {
+
+      {open ? (
+        <DropdownItemsContainer>
+          {items.map(({ label, value }) => {
             return (
-              <DropdownLabel
+              <DropdownItem
                 bold={value === selectedValue}
                 key={value}
                 onClick={() => {
@@ -279,10 +304,11 @@ export const Dropdown = ({
                 }}
               >
                 {label}
-              </DropdownLabel>
+              </DropdownItem>
             )
-          })
-        : null}
+          })}
+        </DropdownItemsContainer>
+      ) : null}
     </DropdownContainer>
   )
 }
@@ -317,19 +343,22 @@ export const Input = ({ onChange, initialValue, type, label }: InputProps) => {
 }
 
 const StyledContainer = styled.div<{ width?: number }>`
-  background-color: ${Color.GREEN};
-  opacity: 0.8;
+  width: ${({ width = 200 }) => width}px;
   position: absolute;
   top: 0px;
-  padding: 4px;
-  z-index: 1;
+  padding: 5px;
+
+  background-color: ${Color.BLACK};
+  opacity: 0.8;
+
   color: white;
   font-family: Helvetica;
-  font-size: 10px;
-  user-select: none;
-  width: ${({ width = 200 }) => width}px;
+  font-size: 12px;
+
   display: flex;
   flex-direction: column;
+
+  user-select: none;
 `
 
 const MinimizeButton = styled.button`

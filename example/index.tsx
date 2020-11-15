@@ -53,26 +53,26 @@ const Panel = () => {
         }}
       />
       <Button
-        label={'Another log'}
+        label={'A button with a very long label'}
         onClick={() => {
           console.log('Hello again!')
         }}
       />
       <Checkbox
-        label={'Something'}
+        label={'A checkbox'}
         onClick={(checked) => {
           console.log('checked', checked)
         }}
       />
       <Dropdown
-        initialValue={'test2'}
+        initialValue={'item2'}
         dropdownLabel={'Pick an item'}
         onChange={(value) => {
           console.log('dropdown value changed', value)
         }}
         items={[
-          { label: 'test', value: 'test' },
-          { label: 'test2', value: 'test2' },
+          { label: 'Item 1', value: 'item1' },
+          { label: 'Item 2', value: 'item2' },
         ]}
       />
       <Input
