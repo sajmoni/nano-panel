@@ -42,7 +42,7 @@ const Panel = () => {
       <StringValue
         label={'A label which is too long to fit'}
         getValue={() => {
-          return 'Hi!'
+          return 'A long value'
         }}
       />
       <Divider />

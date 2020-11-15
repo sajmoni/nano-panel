@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ReactNode } from 'react'
 import ReactDOM from 'react-dom'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { save, restore } from './storage'
 import useMountedState from './useMountedState'
@@ -16,6 +16,12 @@ const ValueContainer = styled.div<{ color: string }>`
   display: flex;
 `
 
+const handleTextOverflow = css`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`
+
 const StyledLabel = styled.div`
   text-align: right;
   width: 75%;
@@ -23,15 +29,15 @@ const StyledLabel = styled.div`
   align-self: flex-end;
   font-size: 12px;
 
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  ${handleTextOverflow};
 `
 
-// TODO: Limit the width of this
 const StyledValue = styled.div`
   font-weight: bold;
   font-size: 14px;
+
+  width: 40px;
+  ${handleTextOverflow};
 `
 
 const DEFAULT_UPDATE_INTERVAL = 1000
