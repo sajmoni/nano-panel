@@ -6,6 +6,7 @@ import renderPanel, {
   Button,
   Checkbox,
   Dropdown,
+  Input,
 } from 'nano-panel'
 
 let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
@@ -73,6 +74,14 @@ const Panel = () => {
           { label: 'test', value: 'test' },
           { label: 'test2', value: 'test2' },
         ]}
+      />
+      <Input
+        label={'Enter a value:'}
+        type={'text'}
+        initialValue={100}
+        onChange={(value) => {
+          console.log('input value change:', value)
+        }}
       />
     </>
   )

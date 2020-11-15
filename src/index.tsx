@@ -281,6 +281,35 @@ export const Dropdown = ({
   )
 }
 
+const StyledInput = styled.input``
+
+const InputContainer = styled.div``
+
+type InputProps = {
+  type?: string
+  label?: string
+  onChange: (value: number | string) => void
+  initialValue: number | string
+}
+
+export const Input = ({ onChange, initialValue, type, label }: InputProps) => {
+  const [value, setValue] = useState(initialValue)
+
+  return (
+    <InputContainer>
+      {label ? <div>{label}</div> : null}
+      <StyledInput
+        type={type}
+        value={value}
+        onChange={({ target: { value } }) => {
+          onChange(value)
+          setValue(value)
+        }}
+      />
+    </InputContainer>
+  )
+}
+
 const StyledContainer = styled.div<{ width?: number }>`
   background-color: ${Color.GREEN};
   opacity: 0.8;
