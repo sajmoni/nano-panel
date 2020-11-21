@@ -7,6 +7,7 @@ import renderPanel, {
   Checkbox,
   Dropdown,
   Input,
+  Snackbar,
 } from 'nano-panel'
 
 let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
@@ -22,8 +23,11 @@ setInterval(() => {
 }, 500)
 
 const Panel = () => {
+  const [notification, setNotification] = useState(null)
+
   return (
     <>
+      <Snackbar value={notification} />
       <NumericValue
         label={'A number'}
         warnAt={{ value: 5 }}
@@ -47,9 +51,9 @@ const Panel = () => {
       />
       <Divider />
       <Button
-        label={'Console log'}
+        label={'Show notification'}
         onClick={() => {
-          console.log('Hello!')
+          setNotification('Hello!')
         }}
       />
       <Button

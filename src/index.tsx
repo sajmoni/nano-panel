@@ -8,7 +8,7 @@ import useMountedState from './useMountedState'
 const STORAGE_KEY = 'nano-panel'
 
 enum Color {
-  GREEN = '#007546',
+  GREEN_DARK = '#173338',
   BLACK = '#000000',
 }
 
@@ -342,13 +342,43 @@ export const Input = ({ onChange, initialValue, type, label }: InputProps) => {
   )
 }
 
+const SNACKBAR_WIDTH = 300
+
+const SnackbarContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: red;
+  border-radius: 8px;
+
+  top: 10px;
+  left: calc(50vw - ${SNACKBAR_WIDTH / 2}px);
+  width: ${SNACKBAR_WIDTH}px;
+  height: 40px;
+
+  font-size: 16px;
+  /* TODO: Cut off text when too long */
+`
+
+type SnackbarProps = {
+  value: string
+}
+
+// TODO: Warn, error or info
+export const Snackbar = ({ value }: SnackbarProps) => {
+  // TODO: Click listener
+  return value ? <SnackbarContainer>{value}</SnackbarContainer> : null
+}
+
 const StyledContainer = styled.div<{ width?: number }>`
   width: ${({ width = 200 }) => width}px;
   position: absolute;
   top: 0px;
   padding: 5px;
 
-  background-color: ${Color.BLACK};
+  background-color: ${Color.GREEN_DARK};
   opacity: 0.8;
 
   color: white;
