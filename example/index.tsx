@@ -10,16 +10,18 @@ import renderPanel, {
   Snackbar,
 } from 'nano-panel'
 
-let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
-let randomNumber2 = Number.parseFloat(Math.random().toFixed(3))
+const DECIMALS = 6
+
+let randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(DECIMALS))
+let randomNumber2 = Number.parseFloat(Math.random().toFixed(DECIMALS))
 
 // Emulating state changing in a game
 setInterval(() => {
-  randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(3))
+  randomNumber1 = Number.parseFloat((Math.random() * 10).toFixed(DECIMALS))
 }, 500)
 
 setInterval(() => {
-  randomNumber2 = Number.parseFloat(Math.random().toFixed(3))
+  randomNumber2 = Number.parseFloat(Math.random().toFixed(DECIMALS))
 }, 500)
 
 const Panel = () => {
@@ -76,11 +78,11 @@ const Panel = () => {
         }}
         items={[
           { label: 'Item 1', value: 'item1' },
-          { label: 'Item 2', value: 'item2' },
+          { label: 'This is a long item', value: 'item2' },
         ]}
       />
       <Input
-        label={'Enter a value:'}
+        label={'Enter a value'}
         type={'text'}
         initialValue={100}
         onChange={(value) => {

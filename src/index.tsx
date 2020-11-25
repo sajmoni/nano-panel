@@ -17,12 +17,14 @@ const defaultBoxShadow = css`
 `
 
 const defaultComponentMargin = css`
-  margin: 5px 0;
+  margin: 2px 0;
 `
 
 const ValueContainer = styled.div<{ color: string }>`
   color: ${({ color }) => color};
   display: flex;
+
+  ${defaultComponentMargin};
 `
 
 const handleTextOverflow = css`
@@ -31,21 +33,28 @@ const handleTextOverflow = css`
   overflow: hidden;
 `
 
+const LABEL_WIDTH = '60%'
+const VALUE_WIDTH = '35%'
+
 const StyledLabel = styled.div`
   text-align: right;
-  width: 75%;
+  width: ${LABEL_WIDTH};
   margin-right: 5px;
-  align-self: flex-end;
   font-size: 12px;
+  align-self: center;
 
   ${handleTextOverflow};
+`
+
+const StyledLabelStringAndNumeric = styled(StyledLabel)`
+  align-self: flex-end;
 `
 
 const StyledValue = styled.div`
   font-weight: bold;
   font-size: 14px;
+  width: ${VALUE_WIDTH};
 
-  width: 40px;
   ${handleTextOverflow};
 `
 
@@ -96,7 +105,8 @@ export const NumericValue: React.FC<{
 
   return (
     <ValueContainer color={getTextColor()}>
-      <StyledLabel>{label}</StyledLabel> <StyledValue>{value}</StyledValue>
+      <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
+      <StyledValue>{value}</StyledValue>
     </ValueContainer>
   )
 }
@@ -120,7 +130,8 @@ export const StringValue: React.FC<{
 
   return (
     <ValueContainer color={'lightgray'}>
-      <StyledLabel>{label}</StyledLabel> <StyledValue>{value}</StyledValue>
+      <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
+      <StyledValue>{value}</StyledValue>
     </ValueContainer>
   )
 }
@@ -148,8 +159,9 @@ const StyledDivider = styled.div`
   height: 1px;
   background-color: lightgray;
   width: 95%;
-  margin: 5px 0;
+
   ${defaultBoxShadow};
+  ${defaultComponentMargin};
 `
 
 export const Divider: React.FC = () => {
@@ -157,16 +169,15 @@ export const Divider: React.FC = () => {
 }
 
 const StyledCheckbox = styled.div`
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
 
-  border: 4px solid darkgray;
-  border-radius: 6px;
+  border: 3px solid darkgray;
+  border-radius: 5px;
 
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 5px;
 
   ${defaultBoxShadow};
 `
@@ -200,10 +211,10 @@ export const Checkbox: React.FC<{
         onClick(newValue)
       }}
     >
+      <StyledLabel>{label}</StyledLabel>
       <StyledCheckbox>
         <EnabledIndicator checked={checked} />
       </StyledCheckbox>
-      <div>{label}</div>
     </CheckboxContainer>
   )
 }
@@ -214,6 +225,8 @@ type DropdownItem = {
 }
 
 const DropdownContainer = styled.div`
+  display: flex;
+
   ${defaultComponentMargin};
 `
 
@@ -232,22 +245,21 @@ const DropdownItem = styled.div<{
 const ArrowDown = styled.div`
   width: 0;
   height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
 
-  border-top: 10px solid white;
+  border-top: 6px solid white;
 `
 
-const DROPDOWN_WIDTH = `100px`
-
-const SelectedValue = styled.div`
+const SelectedDropdownValue = styled.div`
   display: flex;
   justify-content: space-between;
-  width: ${DROPDOWN_WIDTH};
+  align-items: center;
+
   cursor: pointer;
   padding: 5px;
 
-  border: 2px solid white;
+  border: 1px solid white;
   border-radius: 4px;
 
   ${defaultBoxShadow};
@@ -256,8 +268,10 @@ const SelectedValue = styled.div`
 const DropdownItemsContainer = styled.div`
   border: 1px solid white;
   border-radius: 4px;
+`
 
-  width: ${DROPDOWN_WIDTH};
+const StyledDropdown = styled.div`
+  width: ${VALUE_WIDTH};
 `
 
 type DropdownProps = {
@@ -280,46 +294,53 @@ export const Dropdown = ({
 
   return (
     <DropdownContainer>
-      <div>{dropdownLabel}</div>
-      <SelectedValue
-        onClick={() => {
-          setOpen(!open)
-        }}
-      >
-        {selectedValue ?? '-'}
-        <ArrowDown />
-      </SelectedValue>
+      <StyledLabel>{dropdownLabel}</StyledLabel>
+      <StyledDropdown>
+        <SelectedDropdownValue
+          onClick={() => {
+            setOpen(!open)
+          }}
+        >
+          {items.find(({ value }) => value === selectedValue)?.label ?? '-'}
+          <ArrowDown />
+        </SelectedDropdownValue>
 
-      {open ? (
-        <DropdownItemsContainer>
-          {items.map(({ label, value }) => {
-            return (
-              <DropdownItem
-                bold={value === selectedValue}
-                key={value}
-                onClick={() => {
-                  onChange(value)
-                  setSelectedValue(value)
-                  setOpen(false)
-                }}
-              >
-                {label}
-              </DropdownItem>
-            )
-          })}
-        </DropdownItemsContainer>
-      ) : null}
+        {open ? (
+          <DropdownItemsContainer>
+            {items.map(({ label, value }) => {
+              return (
+                <DropdownItem
+                  bold={value === selectedValue}
+                  key={value}
+                  onClick={() => {
+                    onChange(value)
+                    setSelectedValue(value)
+                    setOpen(false)
+                  }}
+                >
+                  {label}
+                </DropdownItem>
+              )
+            })}
+          </DropdownItemsContainer>
+        ) : null}
+      </StyledDropdown>
     </DropdownContainer>
   )
 }
 
-const StyledInput = styled.input``
+const StyledInput = styled.input`
+  width: ${VALUE_WIDTH};
+`
 
-const InputContainer = styled.div``
+const InputContainer = styled.div`
+  display: flex;
+  ${defaultComponentMargin};
+`
 
 type InputProps = {
   type?: string
-  label?: string
+  label: string
   onChange: (value: number | string) => void
   initialValue: number | string
 }
@@ -329,7 +350,7 @@ export const Input = ({ onChange, initialValue, type, label }: InputProps) => {
 
   return (
     <InputContainer>
-      {label ? <div>{label}</div> : null}
+      <StyledLabel>{label}</StyledLabel>
       <StyledInput
         type={type}
         value={value}
