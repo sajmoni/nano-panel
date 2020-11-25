@@ -158,7 +158,6 @@ export const Button: React.FC<{
 const StyledDivider = styled.div`
   height: 1px;
   background-color: lightgray;
-  width: 95%;
 
   ${defaultBoxShadow};
   ${defaultComponentMargin};
@@ -240,15 +239,17 @@ const DropdownItem = styled.div<{
   &:hover {
     opacity: 0.5;
   }
+
+  ${handleTextOverflow};
 `
 
 const ArrowDown = styled.div`
   width: 0;
   height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
 
-  border-top: 6px solid white;
+  border-top: 5px solid white;
 `
 
 const SelectedDropdownValue = styled.div`
@@ -257,7 +258,7 @@ const SelectedDropdownValue = styled.div`
   align-items: center;
 
   cursor: pointer;
-  padding: 5px;
+  padding: 3px;
 
   border: 1px solid white;
   border-radius: 4px;
@@ -272,6 +273,10 @@ const DropdownItemsContainer = styled.div`
 
 const StyledDropdown = styled.div`
   width: ${VALUE_WIDTH};
+`
+
+const SelectedDropdownValueText = styled.div`
+  ${handleTextOverflow};
 `
 
 type DropdownProps = {
@@ -301,7 +306,9 @@ export const Dropdown = ({
             setOpen(!open)
           }}
         >
-          {items.find(({ value }) => value === selectedValue)?.label ?? '-'}
+          <SelectedDropdownValueText>
+            {items.find(({ value }) => value === selectedValue)?.label ?? '-'}
+          </SelectedDropdownValueText>
           <ArrowDown />
         </SelectedDropdownValue>
 
