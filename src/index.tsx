@@ -74,12 +74,10 @@ export const NumericValue: React.FC<{
   updateInterval = DEFAULT_UPDATE_INTERVAL,
   warnAt: { value: warnAtValue, when = 'above' } = {},
 }) => {
-  // TODO: Other default value
-  const [value, setValue] = useState<number>(-999)
+  const [value, setValue] = useState<number>(getValue())
   const isMounted = useMountedState()
 
   useEffect(() => {
-    setValue(getValue())
     setInterval(() => {
       if (isMounted()) {
         setValue(getValue())
@@ -116,11 +114,10 @@ export const StringValue: React.FC<{
   getValue: () => string
   updateInterval?: number
 }> = ({ label, getValue, updateInterval = DEFAULT_UPDATE_INTERVAL }) => {
-  const [value, setValue] = useState<string>('-')
+  const [value, setValue] = useState<string>(getValue())
   const isMounted = useMountedState()
 
   useEffect(() => {
-    setValue(getValue())
     setInterval(() => {
       if (isMounted()) {
         setValue(getValue())
