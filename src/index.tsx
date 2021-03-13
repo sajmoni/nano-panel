@@ -417,6 +417,7 @@ export const Snackbar = ({ value }: SnackbarProps) => {
 const DEFAULT_WIDTH = 250
 
 const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
+  box-sizing: border-box;
   width: ${({ width, isMinimized }) => (isMinimized ? 'auto' : `${width}px`)};
   height: ${({ isMinimized }) => (isMinimized ? 'auto' : '100%')};
   position: absolute;
