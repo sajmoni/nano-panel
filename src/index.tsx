@@ -421,25 +421,30 @@ const MinimizeButton = styled.button`
 `
 
 const Container = ({ children }: { children: ReactNode }) => {
-  const [isMinimized, setIsMinimized] = useState(false)
+  const [isMinimized, setIsMinimized] = useState(true)
+  const [hasLoaded, setHasLoaded] = useState(false)
 
   useEffect(() => {
     const restored = restore(STORAGE_KEY)
     if (restored) {
       setIsMinimized(restored.minimized)
+      setHasLoaded(true)
+    } else {
+      setIsMinimized(false)
+      setHasLoaded(true)
     }
   }, [])
 
   return (
     <StyledContainer width={isMinimized ? 60 : undefined}>
-      <MinimizeButton
+      { hasLoaded ? <MinimizeButton
         onClick={() => {
           setIsMinimized(!isMinimized)
           save(STORAGE_KEY, { minimized: !isMinimized })
         }}
-      >
+      > 
         {isMinimized ? 'Show debug' : 'Hide'}
-      </MinimizeButton>
+      </MinimizeButton>: null}
       {isMinimized ? null : children}
     </StyledContainer>
   )
