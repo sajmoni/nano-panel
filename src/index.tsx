@@ -64,6 +64,7 @@ export const NumericValue: React.FC<{
   label: string
   getValue: () => number
   updateInterval?: number
+  description?: string
   warnAt?: {
     value: number
     when?: 'above' | 'below'
@@ -71,6 +72,7 @@ export const NumericValue: React.FC<{
 }> = ({
   label,
   getValue,
+  description,
   updateInterval = DEFAULT_UPDATE_INTERVAL,
   warnAt: { value: warnAtValue, when = 'above' } = {},
 }) => {
@@ -102,7 +104,7 @@ export const NumericValue: React.FC<{
   }
 
   return (
-    <ValueContainer color={getTextColor()}>
+    <ValueContainer color={getTextColor()} title={description}>
       <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
       <StyledValue>{value}</StyledValue>
     </ValueContainer>
@@ -112,8 +114,14 @@ export const NumericValue: React.FC<{
 export const StringValue: React.FC<{
   label: string
   getValue: () => string
+  description?: string
   updateInterval?: number
-}> = ({ label, getValue, updateInterval = DEFAULT_UPDATE_INTERVAL }) => {
+}> = ({
+  label,
+  getValue,
+  description,
+  updateInterval = DEFAULT_UPDATE_INTERVAL,
+}) => {
   const [value, setValue] = useState<string>(getValue())
   const isMounted = useMountedState()
 
@@ -126,7 +134,7 @@ export const StringValue: React.FC<{
   }, [])
 
   return (
-    <ValueContainer color={'lightgray'}>
+    <ValueContainer color={'lightgray'} title={description}>
       <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
       <StyledValue>{value}</StyledValue>
     </ValueContainer>
@@ -148,8 +156,13 @@ const StyledButton = styled.button`
 export const Button: React.FC<{
   label: string
   onClick: () => void
-}> = ({ label, onClick }) => {
-  return <StyledButton onClick={onClick}>{label}</StyledButton>
+  description?: string
+}> = ({ label, onClick, description }) => {
+  return (
+    <StyledButton onClick={onClick} title={description}>
+      {label}
+    </StyledButton>
+  )
 }
 
 const StyledDivider = styled.div`
@@ -196,16 +209,16 @@ const CheckboxContainer = styled.div`
 export const Checkbox: React.FC<{
   label: string
   onClick: (checked: boolean) => void
-}> = ({ label, onClick }) => {
-  const [checked, setChecked] = useState(false)
-
+  description?: string
+  checked: boolean
+}> = ({ label, onClick, description, checked }) => {
   return (
     <CheckboxContainer
       onClick={() => {
         const newValue = !checked
-        setChecked(newValue)
         onClick(newValue)
       }}
+      title={description}
     >
       <StyledLabel>{label}</StyledLabel>
       <StyledCheckbox>
@@ -278,7 +291,7 @@ const SelectedDropdownValueText = styled.div`
 
 type DropdownProps = {
   items: DropdownItem[]
-  initialValue?: string | number
+  value: string | number
   onChange: (value: string | number) => void
   dropdownLabel?: string
   description?: string
@@ -287,16 +300,15 @@ type DropdownProps = {
 export const Dropdown = ({
   items,
   onChange,
-  initialValue,
+  value,
   dropdownLabel,
   description,
 }: DropdownProps) => {
   const [open, setOpen] = useState(false)
-  const [selectedValue, setSelectedValue] = useState(initialValue)
 
   return (
     <DropdownContainer>
-      <StyledLabel>{dropdownLabel}</StyledLabel>
+      <StyledLabel title={description}>{dropdownLabel}</StyledLabel>
       <StyledDropdown>
         <SelectedDropdownValue
           onClick={() => {
@@ -304,25 +316,24 @@ export const Dropdown = ({
           }}
         >
           <SelectedDropdownValueText>
-            {items.find(({ value }) => value === selectedValue)?.label ?? '-'}
+            {items.find((item) => item.value === value)?.label ?? '-'}
           </SelectedDropdownValueText>
           <ArrowDown />
         </SelectedDropdownValue>
 
         {open ? (
           <DropdownItemsContainer>
-            {items.map(({ label, value }) => {
+            {items.map((item) => {
               return (
                 <DropdownItem
-                  bold={value === selectedValue}
-                  key={value}
+                  bold={item.value === value}
+                  key={item.value}
                   onClick={() => {
-                    onChange(value)
-                    setSelectedValue(value)
+                    onChange(item.value)
                     setOpen(false)
                   }}
                 >
-                  {label}
+                  {item.label}
                 </DropdownItem>
               )
             })}
@@ -344,23 +355,27 @@ const InputContainer = styled.div`
 
 type InputProps = {
   type?: string
+  description?: string
   label: string
   onChange: (value: number | string) => void
-  initialValue: number | string
+  value: number | string
 }
 
-export const Input = ({ onChange, initialValue, type, label }: InputProps) => {
-  const [value, setValue] = useState(initialValue)
-
+export const Input = ({
+  onChange,
+  value,
+  type,
+  label,
+  description,
+}: InputProps) => {
   return (
     <InputContainer>
-      <StyledLabel>{label}</StyledLabel>
+      <StyledLabel title={description}>{label}</StyledLabel>
       <StyledInput
         type={type}
         value={value}
         onChange={({ target: { value } }) => {
           onChange(value)
-          setValue(value)
         }}
       />
     </InputContainer>
@@ -397,8 +412,13 @@ export const Snackbar = ({ value }: SnackbarProps) => {
   return value ? <SnackbarContainer>{value}</SnackbarContainer> : null
 }
 
-const StyledContainer = styled.div<{ width?: number }>`
-  width: ${({ width = 200 }) => width}px;
+// === End of components ====
+
+const DEFAULT_WIDTH = 250
+
+const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
+  width: ${({ width, isMinimized }) => (isMinimized ? 'auto' : `${width}px`)};
+  height: ${({ isMinimized }) => (isMinimized ? 'auto' : '100%')};
   position: absolute;
   top: 0px;
   padding: 5px;
@@ -418,9 +438,16 @@ const StyledContainer = styled.div<{ width?: number }>`
 
 const MinimizeButton = styled.button`
   align-self: flex-start;
+  cursor: pointer;
 `
 
-const Container = ({ children }: { children: ReactNode }) => {
+export const Panel = ({
+  children,
+  width = DEFAULT_WIDTH,
+}: {
+  children: ReactNode
+  width?: number
+}) => {
   const [isMinimized, setIsMinimized] = useState(true)
   const [hasLoaded, setHasLoaded] = useState(false)
 
@@ -436,22 +463,30 @@ const Container = ({ children }: { children: ReactNode }) => {
   }, [])
 
   return (
-    <StyledContainer width={isMinimized ? 60 : undefined}>
-      { hasLoaded ? <MinimizeButton
-        onClick={() => {
-          setIsMinimized(!isMinimized)
-          save(STORAGE_KEY, { minimized: !isMinimized })
-        }}
-      > 
-        {isMinimized ? 'Show debug' : 'Hide'}
-      </MinimizeButton>: null}
+    <StyledContainer width={width} isMinimized={isMinimized}>
+      {hasLoaded ? (
+        <MinimizeButton
+          onClick={() => {
+            setIsMinimized(!isMinimized)
+            save(STORAGE_KEY, { minimized: !isMinimized })
+          }}
+        >
+          {isMinimized ? 'Show debug' : 'Hide'}
+        </MinimizeButton>
+      ) : null}
       {isMinimized ? null : children}
     </StyledContainer>
   )
 }
 
-const renderPanel = (panel: ReactNode, htmlElement: HTMLElement): void => {
-  ReactDOM.render(<Container>{panel}</Container>, htmlElement)
+/**
+ * Just a simple wrapper around ReactDOM.render
+ */
+const renderPanel = (
+  panel: React.DOMElement<React.DOMAttributes<Element>, Element>,
+  htmlElement: HTMLElement,
+): void => {
+  ReactDOM.render(panel, htmlElement)
 }
 
 export default renderPanel

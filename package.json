@@ -66,6 +66,7 @@
   "dependencies": {
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-json-view": "1.21.3",
     "styled-components": "5.2.1"
   }
 }

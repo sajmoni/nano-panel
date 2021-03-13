@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import ReactJson from 'react-json-view'
 import renderPanel, {
+  Panel,
   NumericValue,
   StringValue,
   Divider,
@@ -24,14 +26,28 @@ setInterval(() => {
   randomNumber2 = Number.parseFloat(Math.random().toFixed(DECIMALS))
 }, 500)
 
-const Panel = () => {
+const state = {
+  application: { volume: 23, scene: 'menu', number: randomNumber1 },
+  name: 'a very long name',
+}
+
+const dropDownItems = [
+  { label: 'Item 1', value: 'item1' },
+  { label: 'This is a long item', value: 'item2' },
+]
+
+const DebugPanel = () => {
   const [notification, setNotification] = useState(null)
+  const [checkboxValue, setCheckBoxValue] = useState(false)
+  const [selectedValue, setSelectedValue] = useState(dropDownItems[1].value)
+  const [inputValue, setInputValue] = useState(100)
 
   return (
-    <>
+    <Panel width={400}>
       <Snackbar value={notification} />
       <NumericValue
         label={'A number'}
+        description={'This will show up as a tooltip when you hover it'}
         warnAt={{ value: 5 }}
         getValue={() => {
           return randomNumber1
@@ -65,32 +81,45 @@ const Panel = () => {
         }}
       />
       <Checkbox
+        checked={checkboxValue}
         label={'A checkbox'}
         onClick={(checked) => {
           console.log('checked', checked)
+          setCheckBoxValue(checked)
         }}
       />
       <Dropdown
-        initialValue={'item2'}
+        value={selectedValue}
         dropdownLabel={'Pick an item'}
         onChange={(value) => {
           console.log('dropdown value changed', value)
+          setSelectedValue(value as string)
         }}
-        items={[
-          { label: 'Item 1', value: 'item1' },
-          { label: 'This is a long item', value: 'item2' },
-        ]}
+        items={dropDownItems}
       />
       <Input
         label={'Enter a value'}
         type={'text'}
-        initialValue={100}
+        value={inputValue}
         onChange={(value) => {
+          setInputValue(value as number)
           console.log('input value change:', value)
         }}
       />
-    </>
+      <Divider />
+      <ReactJson
+        src={state}
+        theme="monokai"
+        displayDataTypes={false}
+        displayObjectSize={false}
+        shouldCollapse={() => true}
+        enableClipboard={false}
+        name={'state'}
+        indentWidth={2}
+        collapseStringsAfterLength={10}
+      />
+    </Panel>
   )
 }
 
-renderPanel(<Panel />, document.querySelector('#debug-panel'))
+renderPanel(<DebugPanel />, document.querySelector('#debug-panel'))
