@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "parcel serve index.html",
-    "refresh": "yarn cache clean && yarn install --force --no-lockfile"
+    "refresh": "yarn cache clean nano-panel && rm -rf $(yarn cache dir)/.tmp && yarn install --force --no-lockfile"
   },
   "dependencies": {
     "nano-panel": "file:../nano-panel.tgz",
