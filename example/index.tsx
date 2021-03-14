@@ -37,14 +37,19 @@ const dropDownItems = [
 ]
 
 const DebugPanel = () => {
-  const [notification, setNotification] = useState(null)
+  const [notification, setNotification] = useState(undefined)
   const [checkboxValue, setCheckBoxValue] = useState(false)
   const [selectedValue, setSelectedValue] = useState(dropDownItems[1].value)
   const [inputValue, setInputValue] = useState(100)
 
   return (
     <Panel width={400}>
-      <Snackbar value={notification} />
+      <Snackbar
+        value={notification}
+        onClose={() => {
+          setNotification(undefined)
+        }}
+      />
       <NumericValue
         label={'A number'}
         description={'This will show up as a tooltip when you hover it'}
@@ -71,7 +76,9 @@ const DebugPanel = () => {
       <Button
         label={'Show notification'}
         onClick={() => {
-          setNotification('Hello!')
+          setNotification(
+            'Error! This is an example of how rendering an error in a snackbar might look like',
+          )
         }}
       />
       <Button

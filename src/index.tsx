@@ -392,24 +392,36 @@ const SnackbarContainer = styled.div`
 
   background-color: red;
   border-radius: 8px;
+  padding: 0px 16px;
 
   top: 10px;
   left: calc(50vw - ${SNACKBAR_WIDTH / 2}px);
   width: ${SNACKBAR_WIDTH}px;
   height: 40px;
+  z-index: 1;
 
-  font-size: 16px;
+  font-size: 14px;
   /* TODO: Cut off text when too long */
 `
 
 type SnackbarProps = {
-  value: string
+  value?: string
+  onClose: () => void
 }
 
+const CloseButton = styled.div`
+  margin-left: auto;
+  cursor: pointer;
+`
+
 // TODO: Warn, error or info
-export const Snackbar = ({ value }: SnackbarProps) => {
-  // TODO: Click listener
-  return value ? <SnackbarContainer>{value}</SnackbarContainer> : null
+export const Snackbar = ({ value, onClose }: SnackbarProps) => {
+  return value ? (
+    <SnackbarContainer>
+      <div>{value}</div>
+      <CloseButton onClick={onClose}>X</CloseButton>
+    </SnackbarContainer>
+  ) : null
 }
 
 // === End of components ====
@@ -433,8 +445,6 @@ const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
 
   display: flex;
   flex-direction: column;
-
-  user-select: none;
 `
 
 const MinimizeButton = styled.button`
