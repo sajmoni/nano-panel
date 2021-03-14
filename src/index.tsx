@@ -483,10 +483,7 @@ export const Panel = ({
 /**
  * Just a simple wrapper around ReactDOM.render
  */
-const renderPanel = (
-  panel: React.DOMElement<React.DOMAttributes<Element>, Element>,
-  htmlElement: HTMLElement,
-): void => {
+const renderPanel = (panel: JSX.Element, htmlElement: HTMLElement): void => {
   ReactDOM.render(panel, htmlElement)
 }
 
