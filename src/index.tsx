@@ -461,6 +461,7 @@ export const Panel = ({
 }) => {
   const [isMinimized, setIsMinimized] = useState(true)
   const [hasLoaded, setHasLoaded] = useState(false)
+  const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
     const restored = restore(STORAGE_KEY)
@@ -474,21 +475,50 @@ export const Panel = ({
   }, [])
 
   return (
-    <StyledContainer width={width} isMinimized={isMinimized}>
-      {hasLoaded ? (
-        <MinimizeButton
-          onClick={() => {
-            setIsMinimized(!isMinimized)
-            save(STORAGE_KEY, { minimized: !isMinimized })
-          }}
-        >
-          {isMinimized ? 'Show debug' : 'Hide'}
-        </MinimizeButton>
-      ) : null}
-      {isMinimized ? null : children}
-    </StyledContainer>
+    <>
+      <StyledContainer width={width} isMinimized={isMinimized}>
+        {hasLoaded ? (
+          <MinimizeButton
+            onClick={() => {
+              setIsMinimized(!isMinimized)
+              save(STORAGE_KEY, { minimized: !isMinimized })
+            }}
+          >
+            {isMinimized ? 'Show debug' : 'Hide'}
+          </MinimizeButton>
+        ) : null}
+        {isMinimized ? null : (
+          <>
+            <div
+              onClick={() => {
+                setIsLocked((value) => !value)
+              }}
+            >
+              {isLocked ? 'Locked' : 'Unlocked'}
+            </div>
+            {children}
+          </>
+        )}
+      </StyledContainer>
+      <Overlay
+        onClick={() => {
+          if (!isLocked) {
+            setIsMinimized(true)
+          }
+        }}
+      />
+    </>
   )
 }
+
+const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+`
 
 /**
  * Just a simple wrapper around ReactDOM.render
