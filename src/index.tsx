@@ -4,8 +4,6 @@ import styled, { css } from 'styled-components'
 import { save, restore } from './storage'
 import useMountedState from './useMountedState'
 
-const STORAGE_KEY = 'nano-panel'
-
 enum Color {
   GREEN_DARK = '#173338',
   BLACK = '#000000',
@@ -453,6 +451,10 @@ const MinimizeButton = styled.button`
   user-select: none;
 `
 
+const LockButton = styled.div`
+  cursor: pointer;
+`
+
 const ChildrenContainer = styled.div<{ isVisible: boolean }>`
   ${({ isVisible }) =>
     isVisible
@@ -476,14 +478,11 @@ export const Panel = ({
   const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
-    const restored = restore(STORAGE_KEY)
-    if (restored) {
-      setIsMinimized(restored.minimized)
-      setHasLoaded(true)
-    } else {
-      setIsMinimized(false)
-      setHasLoaded(true)
-    }
+    const restoredMinimized: boolean | undefined = restore('minimized')
+    const restoredLocked: boolean | undefined = restore('locked')
+    setIsMinimized(restoredMinimized ?? false)
+    setIsLocked(restoredLocked ?? false)
+    setHasLoaded(true)
   }, [])
 
   return (
@@ -493,20 +492,21 @@ export const Panel = ({
           <MinimizeButton
             onClick={() => {
               setIsMinimized(!isMinimized)
-              save(STORAGE_KEY, { minimized: !isMinimized })
+              save('minimized', !isMinimized)
             }}
           >
             {isMinimized ? 'Show debug' : 'Hide'}
           </MinimizeButton>
         ) : null}
         <ChildrenContainer isVisible={!isMinimized}>
-          <div
+          <LockButton
             onClick={() => {
-              setIsLocked((value) => !value)
+              setIsLocked(!isLocked)
+              save('locked', !isLocked)
             }}
           >
             {isLocked ? 'Locked' : 'Unlocked'}
-          </div>
+          </LockButton>
           {children}
         </ChildrenContainer>
       </StyledContainer>
