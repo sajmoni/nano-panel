@@ -49,24 +49,25 @@
     }
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "8.2.0",
+    "@rollup/plugin-typescript": "8.2.1",
     "@types/react": "17.0.3",
-    "@types/react-dom": "17.0.2",
-    "@types/styled-components": "5.1.8",
+    "@types/react-dom": "17.0.3",
+    "@types/styled-components": "5.1.9",
     "eslint-config-xo-typescript": "0.38.0",
     "husky": "4.3.0",
     "lint-staged": "10.5.4",
     "np": "7.4.0",
     "plop": "2.7.4",
-    "rollup": "2.41.2",
-    "tslib": "2.1.0",
-    "typescript": "4.2.3",
+    "rollup": "2.45.1",
+    "tslib": "2.2.0",
+    "typescript": "4.2.4",
     "xo": "0.38.2"
   },
+  "peerDependencies": {
+    "react": "17.x",
+    "react-dom": "17.x"
+  },
   "dependencies": {
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
-    "react-json-view": "1.21.3",
-    "styled-components": "5.2.1"
+    "styled-components": "5.2.3"
   }
 }

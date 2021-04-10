@@ -9,7 +9,7 @@ export default [
     output: {
       dir: OUTPUT_FOLDER,
       format: 'cjs',
-      exports: 'named'
+      exports: 'named',
     },
     external: ['react', 'react-dom', 'styled-components'],
     plugins: [typescript()],
@@ -28,7 +28,7 @@ export default [
     output: {
       dir: OUTPUT_FOLDER,
       format: 'cjs',
-      exports: 'default'
+      exports: 'default',
     },
     external: ['react'],
     plugins: [typescript()],

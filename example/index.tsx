@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import ReactDOM from 'react-dom'
 import ReactJson from 'react-json-view'
-import renderPanel, {
+
+import {
   Panel,
   NumericValue,
   StringValue,
@@ -129,4 +131,4 @@ const DebugPanel = () => {
   )
 }
 
-renderPanel(<DebugPanel />, document.querySelector('#debug-panel'))
+ReactDOM.render(<DebugPanel />, document.querySelector('#debug-panel'))

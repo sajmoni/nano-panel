@@ -1,5 +1,4 @@
 import React, { useEffect, useState, ReactNode } from 'react'
-import ReactDOM from 'react-dom'
 import styled, { css } from 'styled-components'
 
 import { save, restore } from './storage'
@@ -450,6 +449,7 @@ const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
 const MinimizeButton = styled.button`
   align-self: flex-start;
   cursor: pointer;
+  user-select: none;
 `
 
 export const Panel = ({
@@ -519,12 +519,3 @@ const Overlay = styled.div`
   height: 100vh;
   z-index: -1;
 `
-
-/**
- * Just a simple wrapper around ReactDOM.render
- */
-const renderPanel = (panel: JSX.Element, htmlElement: HTMLElement): void => {
-  ReactDOM.render(panel, htmlElement)
-}
-
-export default renderPanel
