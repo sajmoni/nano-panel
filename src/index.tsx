@@ -388,6 +388,7 @@ const SnackbarContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  visibility: visible;
 
   background-color: red;
   border-radius: 8px;
@@ -452,6 +453,17 @@ const MinimizeButton = styled.button`
   user-select: none;
 `
 
+const ChildrenContainer = styled.div<{ isVisible: boolean }>`
+  ${({ isVisible }) =>
+    isVisible
+      ? 'visibility: visible'
+      : css`
+          visibility: hidden;
+          width: 0;
+          height: 0;
+        `};
+`
+
 export const Panel = ({
   children,
   width = DEFAULT_WIDTH,
@@ -487,18 +499,16 @@ export const Panel = ({
             {isMinimized ? 'Show debug' : 'Hide'}
           </MinimizeButton>
         ) : null}
-        {isMinimized ? null : (
-          <>
-            <div
-              onClick={() => {
-                setIsLocked((value) => !value)
-              }}
-            >
-              {isLocked ? 'Locked' : 'Unlocked'}
-            </div>
-            {children}
-          </>
-        )}
+        <ChildrenContainer isVisible={!isMinimized}>
+          <div
+            onClick={() => {
+              setIsLocked((value) => !value)
+            }}
+          >
+            {isLocked ? 'Locked' : 'Unlocked'}
+          </div>
+          {children}
+        </ChildrenContainer>
       </StyledContainer>
       <Overlay
         onClick={() => {

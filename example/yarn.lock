@@ -4208,7 +4208,7 @@ ms@2.1.2:
 
 "nano-panel@file:../nano-panel.tgz":
   version "0.0.7"
-  resolved "file:../nano-panel.tgz#c3c905a56f3370a14eaa92a6d3447512a89a207d"
+  resolved "file:../nano-panel.tgz#9dba9bf34a6c244461a6e93a48d291c14c69830d"
   dependencies:
     styled-components "5.2.3"
 
