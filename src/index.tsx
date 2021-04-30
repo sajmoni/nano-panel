@@ -573,13 +573,13 @@ export const Panel = ({
           {children}
         </ChildrenContainer>
       </StyledContainer>
-      <Overlay
-        onClick={() => {
-          if (!isLocked) {
+      {!isMinimized && !isLocked ? (
+        <Overlay
+          onClick={() => {
             setIsMinimized(true)
-          }
-        }}
-      />
+          }}
+        />
+      ) : null}
     </>
   )
 }

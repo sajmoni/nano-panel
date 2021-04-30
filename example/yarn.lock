@@ -4207,8 +4207,8 @@ ms@2.1.2:
   integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
 "nano-panel@file:../nano-panel.tgz":
-  version "0.0.8"
-  resolved "file:../nano-panel.tgz#469898c6b804f2a205efd15c5875d0478f8645fd"
+  version "0.0.9"
+  resolved "file:../nano-panel.tgz#9a82670e5e1eed6ea67bb009f89d9dfbccc66dab"
   dependencies:
     styled-components "5.2.3"
 
