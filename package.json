@@ -1,5 +1,5 @@
 {
-  "name": "nano-panel2",
+  "name": "nano-panel",
   "license": "MIT",
   "version": "0.0.0",
   "description": "",
@@ -7,6 +7,7 @@
   "scripts": {
     "build": "rm -rf dist && tsc",
     "go": "npm run build && preview && ava",
+    "app": "npm run build && preview && cd app && npm run dev",
     "release": "npm run build && np --no-tests",
     "test": "ava",
     "qa": "tsc && xo --fix"
@@ -34,24 +35,20 @@
     "useTabs": false,
     "bracketSpacing": true
   },
-  "xo": {
-    "prettier": true,
-    "env": [
-      "es2020",
-      "node"
-    ],
-    "rules": {
-      "import/no-extraneous-dependencies": "off",
-      "unicorn/filename-case": "off",
-      "capitalized-comments": "off"
-    }
-  },
   "devDependencies": {
+    "@types/styled-components": "5.1.23",
     "ava": "4.0.1",
     "esbuild-runner": "2.2.1",
     "np": "7.6.0",
     "package-preview": "4.0.0",
-    "typescript": "4.5.5",
-    "xo": "0.48.0"
+    "prettier": "2.5.1",
+    "typescript": "4.5.5"
+  },
+  "dependencies": {
+    "styled-components": "5.3.3"
+  },
+  "peerDependencies": {
+    "react": "17.x",
+    "react-dom": "17.x"
   }
 }

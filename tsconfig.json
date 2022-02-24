@@ -5,6 +5,7 @@
     "strict": true,
     "esModuleInterop": true,
     "declaration": true,
+    "jsx": "preserve",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
