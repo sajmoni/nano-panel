@@ -1,28 +1,31 @@
 {
-  "name": "nano-panel",
+  "name": "nano-panel2",
   "license": "MIT",
-  "version": "0.0.10",
+  "version": "0.0.0",
   "description": "",
   "keywords": [],
   "scripts": {
-    "build": "rm -rf dist && rollup --config rollup.config.js",
+    "build": "rm -rf dist && tsc",
+    "go": "npm run build && preview && ava",
+    "release": "npm run build && np --no-tests",
     "test": "ava",
-    "plop": "plop",
-    "release": "yarn clean && yarn audit && yarn build && np --no-tests",
-    "clean": "rm -f nano-panel.tgz",
-    "qa": "yarn tsc && yarn xo --fix",
-    "go": "./build-test.sh"
+    "qa": "tsc && xo --fix"
   },
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "files": [
     "dist/"
   ],
-  "directories": {
-    "example": "example"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sajmoni/nano-panel.git"
+  "ava": {
+    "require": [
+      "esbuild-runner/register"
+    ],
+    "extensions": [
+      "ts"
+    ]
   },
   "prettier": {
     "trailingComma": "all",
@@ -35,39 +38,20 @@
     "prettier": true,
     "env": [
       "es2020",
-      "browser"
+      "node"
     ],
     "rules": {
+      "import/no-extraneous-dependencies": "off",
       "unicorn/filename-case": "off",
-      "capitalized-comments": "off",
-      "dot-notation": "off"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
+      "capitalized-comments": "off"
     }
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "8.2.1",
-    "@types/react": "17.0.4",
-    "@types/react-dom": "17.0.3",
-    "@types/styled-components": "5.1.9",
-    "eslint-config-xo-typescript": "0.40.0",
-    "husky": "4.3.0",
-    "lint-staged": "10.5.4",
-    "np": "7.5.0",
-    "plop": "2.7.4",
-    "rollup": "2.46.0",
-    "tslib": "2.2.0",
-    "typescript": "4.2.4",
-    "xo": "0.39.1"
-  },
-  "peerDependencies": {
-    "react": "17.x",
-    "react-dom": "17.x"
-  },
-  "dependencies": {
-    "styled-components": "5.2.3"
+    "ava": "4.0.1",
+    "esbuild-runner": "2.2.1",
+    "np": "7.6.0",
+    "package-preview": "4.0.0",
+    "typescript": "4.5.5",
+    "xo": "0.48.0"
   }
 }

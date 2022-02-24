@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
-    "types": ["react", "react-dom", "styled-components"],
-    "target": "ES2017",
+    "target": "esnext",
     "module": "esnext",
-    "moduleResolution": "node",
     "strict": true,
-    "jsx": "react",
-    "declaration": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
