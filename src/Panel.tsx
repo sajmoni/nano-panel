@@ -1,10 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react'
+import { createCommand } from 'typed-ls'
 import styled, { css } from 'styled-components'
-
-enum Color {
-  GREEN_DARK = '#173338',
-  BLACK = '#000000',
-}
+import Color from './internal/color'
 
 const Overlay = styled.div`
   position: absolute;
@@ -103,23 +100,25 @@ const TopRow = styled.div`
   align-items: center;
 `
 
+const savedMinimized = createCommand('minimized', false)
+const savedLocked = createCommand('minimized', true)
+
 export const Panel = ({
   children,
   width = 250,
+  orientation = 'left',
 }: {
   children: ReactNode
   width?: number
+  orientation?: 'left' | 'right'
 }) => {
   const [isMinimized, setIsMinimized] = useState(true)
   const [hasLoaded, setHasLoaded] = useState(false)
   const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
-    // TODO: Use typed-ls
-    // const restoredMinimized: boolean | undefined = restore('minimized')
-    // const restoredLocked: boolean | undefined = restore('locked')
-    // setIsMinimized(restoredMinimized ?? false)
-    // setIsLocked(restoredLocked ?? false)
+    setIsMinimized(savedMinimized.get())
+    setIsLocked(savedLocked.get())
     setHasLoaded(true)
   }, [])
 
@@ -131,7 +130,7 @@ export const Panel = ({
             <MinimizeButton
               onClick={() => {
                 setIsMinimized(!isMinimized)
-                // save('minimized', !isMinimized)
+                savedMinimized.set(!isMinimized)
               }}
             >
               {isMinimized ? 'Show debug' : 'Hide'}
@@ -139,7 +138,7 @@ export const Panel = ({
             <LockButton
               onClick={() => {
                 setIsLocked(!isLocked)
-                // save('locked', !isLocked)
+                savedLocked.set(!isMinimized)
               }}
               isVisible={!isMinimized}
             >

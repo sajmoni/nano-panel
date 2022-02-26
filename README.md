@@ -2,7 +2,7 @@
   nano-panel
 </h1>
 <h4 align="center">
-  Minimal configurable debug panel for websites
+  Configurable debug overlay for websites
 </h4>
 
 <div align="center">
@@ -12,41 +12,43 @@
 
 ## :sparkles: Features
 
-`nano-panel` is used to render information when debugging a website. It injects itself into the DOM and renders on top of your other content.
+`nano-panel` is used to render information when debugging a website. Inject it into the DOM and it renders on top of your other content.
 
-  - Uses React
+- Polls for data every second
 
-  - Has built-in components
+- Uses React
 
-  - Easy to extend
+- Has built-in components
 
-  - Possible to minimize. The state is remembered between browser refreshes.
+- Easy to extend
+
+- Possible to minimize
+
 ---
 
 ## :newspaper: API
 
-The library exports a `renderPanel` function as a default export.
+You need to install `react` and `react-dom` if you don't already use these in your app.
 
-It takes a React component and an HTML element to inject the panel into.
+Render the `Panel` component with `react-dom`.
 
 ```jsx
-import renderPanel, { NumericValue } from 'nano-panel'
+import ReactDOM from 'react-dom'
+import { Panel, NumericValue } from 'nano-panel'
 
-renderPanel((
-  <>
-    <NumericValue 
-      label={'A number'}
-      getValue={() => 3}
-    />
-  </>
-), document.getElementById('debug-panel'))
+ReactDOM.render(
+  <Panel>
+    <NumericValue label={'A number'} getValue={() => 42} />
+  </Panel>,
+  document.getElementById('debug-panel'),
+)
 ```
 
-## Components
+## :jigsaw: Components
 
 ### NumericValue
 
-Renders a `number` with a label.
+> Renders a number with a label
 
 <!-- TODO: Show gif -->
 
@@ -62,7 +64,7 @@ type: `() => number`
 
 This function is called once every second. Needs to return the data to display in the panel.
 
-**`warnAt`** *(optional)*
+**`warnAt`** _(optional)_
 
 type: `object`
 
@@ -80,11 +82,15 @@ type: `"above"` (default) or `"below"`
 
 If `below`, will warn when value goes under that number.
 
+```tsx
+// Example
+```
+
 ---
 
 ### StringValue
 
-Renders a `string` with a label.
+> Renders a string with a label
 
 <!-- TODO: Show gif -->
 
@@ -100,6 +106,10 @@ type: `() => string`
 
 This function is called once every second. Needs to return the data to display in the panel.
 
+```tsx
+// Example
+```
+
 ---
 
 ### Button
@@ -114,11 +124,32 @@ type: `string`
 
 type: `() => void`
 
+```tsx
+<Button
+  label={'Click me'}
+  onClick={() => {
+    console.log('Clicked')
+  }}
+/>
+```
+
 ---
 
 ### Divider
 
-A horizontal line to divide sections in the panel.
+> A horizontal line to divide sections in the panel
+
+```tsx
+<Divider />
+```
+
+---
+
+### Checkbox
+
+### Snackbar
+
+### Dropdown
 
 ---
 
@@ -135,3 +166,7 @@ npm install nano-panel
 ```
 yarn add nano-panel
 ```
+
+## Requirements
+
+- React 18

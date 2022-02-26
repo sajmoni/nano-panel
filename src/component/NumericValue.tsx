@@ -44,6 +44,9 @@ const NumericValue = ({
 }: {
   label: string
   getValue: () => number
+  // getValue?: () => number
+  // bindState: number
+  // bindValue: string
   updateInterval?: number
   description?: string
   warnAt?: {
