@@ -15,7 +15,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "git+https://github.com/sajmoni/nano-panel.git"
   },
   "files": [
     "dist/"
