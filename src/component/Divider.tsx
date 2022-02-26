@@ -8,7 +8,7 @@ const StyledDivider = styled.div`
   margin: 2px 0;
 `
 
-const Divider: React.FC = () => {
+const Divider = () => {
   return <StyledDivider />
 }
 

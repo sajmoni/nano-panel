@@ -31,12 +31,17 @@ const CheckboxContainer = styled.div`
   margin: 2px 0;
 `
 
-const Checkbox: React.FC<{
+const Checkbox = ({
+  label,
+  onClick,
+  description,
+  checked,
+}: {
   label: string
   onClick: (checked: boolean) => void
   description?: string
   checked: boolean
-}> = ({ label, onClick, description, checked }) => {
+}) => {
   return (
     <CheckboxContainer
       onClick={() => {

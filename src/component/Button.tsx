@@ -14,11 +14,15 @@ const StyledButton = styled.button`
   font-size: 12px;
 `
 
-const Button: React.FC<{
+const Button = ({
+  label,
+  onClick,
+  description,
+}: {
   label: string
   onClick: () => void
   description?: string
-}> = ({ label, onClick, description }) => {
+}) => {
   return (
     <StyledButton onClick={onClick} title={description}>
       {label}

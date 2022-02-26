@@ -35,12 +35,17 @@ const StyledValue = styled.div`
   ${handleTextOverflow};
 `
 
-const StringValue: React.FC<{
+const StringValue = ({
+  label,
+  getValue,
+  description,
+  updateInterval = 1000,
+}: {
   label: string
   getValue: () => string
   description?: string
   updateInterval?: number
-}> = ({ label, getValue, description, updateInterval = 1000 }) => {
+}) => {
   const [value, setValue] = useState<string>(getValue())
   const isMounted = useMountedState()
 
