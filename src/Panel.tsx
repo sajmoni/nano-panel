@@ -101,7 +101,7 @@ const TopRow = styled.div`
 `
 
 const savedMinimized = createCommand('minimized', false)
-const savedLocked = createCommand('minimized', true)
+const savedLocked = createCommand('locked', true)
 
 export const Panel = ({
   children,
