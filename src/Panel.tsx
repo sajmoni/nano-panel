@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react'
-import { createCommand } from 'typed-ls'
+import { createStoredValue } from 'typed-ls'
 import styled, { css } from 'styled-components'
 import Color from './internal/color'
 
@@ -100,8 +100,8 @@ const TopRow = styled.div`
   align-items: center;
 `
 
-const savedMinimized = createCommand('minimized', false)
-const savedLocked = createCommand('locked', true)
+const savedMinimized = createStoredValue('minimized', false)
+const savedLocked = createStoredValue('locked', true)
 
 export const Panel = ({
   children,
