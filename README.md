@@ -33,14 +33,15 @@ You need to install `react` and `react-dom` if you don't already use these in yo
 Render the `Panel` component with `react-dom`.
 
 ```jsx
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import { Panel, NumericValue } from 'nano-panel'
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('debug-panel'))
+
+root.render(
   <Panel>
     <NumericValue label={'A number'} getValue={() => 42} />
   </Panel>,
-  document.getElementById('debug-panel'),
 )
 ```
 
@@ -155,16 +156,8 @@ type: `() => void`
 
 ## :package: Install
 
-**npm**
-
-```
+```sh
 npm install nano-panel
-```
-
-**yarn**
-
-```
-yarn add nano-panel
 ```
 
 ## Requirements
