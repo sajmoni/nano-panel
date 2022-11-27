@@ -10,15 +10,16 @@ import {
   Input,
   Snackbar,
 } from 'nano-panel'
-import ReactDOM from 'react-dom'
+import { createRoot } from 'react-dom/client'
+
 import './index.css'
 import App from './App'
 
-ReactDOM.render(
+const appRoot = createRoot(document.getElementById('root') as HTMLElement)
+appRoot.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root'),
 )
 
 const mockExternalState = {
@@ -90,4 +91,5 @@ const DebugPanel = () => {
   )
 }
 
-ReactDOM.render(<DebugPanel />, document.getElementById('debug-panel'))
+const root = createRoot(document.getElementById('debug-panel') as HTMLElement)
+root.render(<DebugPanel />)
