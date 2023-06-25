@@ -77,7 +77,7 @@ const SelectedDropdownValueText = styled.div`
 
 type DropdownProps<T> = {
   items: DropdownItem<T>[]
-  value: T
+  value: T | undefined
   onChange: (value: T) => void
   label: string
   description?: string
