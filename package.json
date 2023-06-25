@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "app": "npm run build && cd app && npm run dev",
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "release": "npm run build && np --no-tests"
   },
   "prettier": "prettier-config-one",
