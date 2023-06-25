@@ -82,7 +82,10 @@ const NumericValue = ({
   }
 
   return (
-    <ValueContainer color={getTextColor()} title={description}>
+    <ValueContainer
+      color={getTextColor()}
+      title={description}
+    >
       <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
       <StyledValue>{value}</StyledValue>
     </ValueContainer>

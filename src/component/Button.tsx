@@ -24,7 +24,10 @@ const Button = ({
   description?: string
 }) => {
   return (
-    <StyledButton onClick={onClick} title={description}>
+    <StyledButton
+      onClick={onClick}
+      title={description}
+    >
       {label}
     </StyledButton>
   )

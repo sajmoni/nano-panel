@@ -34,10 +34,13 @@ const DebugPanel = () => {
   const [inputValue, setInputValue] = useState('Input text')
   return (
     <Panel>
-      <StringValue label={'Hello'} getValue={() => 'world'} />
+      <StringValue
+        label={'Hello'}
+        getValue={() => 'world'}
+      />
       <Divider />
       <Button
-        label="Click me"
+        label='Click me'
         onClick={() => {
           mockExternalState.timesClicked += 1
         }}
@@ -48,8 +51,8 @@ const DebugPanel = () => {
       />
       <Divider />
       <Dropdown
-        label="Pick a value"
-        description="This text describes the Dropdown"
+        label='Pick a value'
+        description='This text describes the Dropdown'
         items={[
           { label: 'Label 1', value: '1' },
           { label: 'Label 2', value: '2' },
@@ -75,7 +78,7 @@ const DebugPanel = () => {
       />
       <Divider />
       <Button
-        label="Show snackbar"
+        label='Show snackbar'
         onClick={() => {
           setShowSnackbar(true)
         }}

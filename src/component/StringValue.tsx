@@ -58,7 +58,10 @@ const StringValue = ({
   }, [])
 
   return (
-    <ValueContainer color={'lightgray'} title={description}>
+    <ValueContainer
+      color={'lightgray'}
+      title={description}
+    >
       <StyledLabelStringAndNumeric>{label}</StyledLabelStringAndNumeric>
       <StyledValue>{value}</StyledValue>
     </ValueContainer>

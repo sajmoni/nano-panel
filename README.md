@@ -40,7 +40,10 @@ const root = createRoot(document.getElementById('debug-panel'))
 
 root.render(
   <Panel>
-    <NumericValue label={'A number'} getValue={() => 42} />
+    <NumericValue
+      label={'A number'}
+      getValue={() => 42}
+    />
   </Panel>,
 )
 ```
