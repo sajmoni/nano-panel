@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import handleTextOverflow from '../internal/handleTextOverflow'
+// import handleTextOverflow from '../internal/handleTextOverflow'
 import Label from '../internal/Label'
 
 const StyledCheckbox = styled.div`

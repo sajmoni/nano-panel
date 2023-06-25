@@ -31,6 +31,7 @@ const Input = <T extends string | number>({
       <StyledInput
         type={type}
         value={value}
+        // @ts-expect-error - This should be correct
         onChange={({ target: { value } }) => {
           onChange(value as T)
         }}

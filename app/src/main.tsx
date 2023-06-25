@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, StrictMode } from 'react'
 import {
   Panel,
   NumericValue,
@@ -9,7 +9,7 @@ import {
   Dropdown,
   Input,
   Snackbar,
-} from 'nano-panel'
+} from '../../dist'
 import { createRoot } from 'react-dom/client'
 
 import './index.css'
@@ -17,9 +17,9 @@ import App from './App'
 
 const appRoot = createRoot(document.getElementById('root') as HTMLElement)
 appRoot.render(
-  <React.StrictMode>
+  <StrictMode>
     <App />
-  </React.StrictMode>,
+  </StrictMode>,
 )
 
 const mockExternalState = {

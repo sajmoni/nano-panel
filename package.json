@@ -13,9 +13,8 @@
     "dist/"
   ],
   "scripts": {
-    "app": "npm run build && preview && cd app && npm run dev",
-    "build": "rm -rf dist && tsc",
-    "go": "npm run build && preview && ava",
+    "app": "npm run build && cd app && npm run dev",
+    "build": "tsc",
     "release": "npm run build && np --no-tests"
   },
   "prettier": "prettier-config-one",
@@ -29,6 +28,7 @@
     "package-preview": "4.0.0",
     "prettier": "2.8.8",
     "prettier-config-one": "0.1.1",
+    "tsconfig-one": "0.0.8",
     "typescript": "5.1.3"
   },
   "peerDependencies": {

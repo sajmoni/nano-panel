@@ -23,6 +23,7 @@ const StyledLabel = styled.div`
   ${handleTextOverflow};
 `
 
+// @ts-expect-error - Fix this later
 const StyledLabelStringAndNumeric = styled(StyledLabel)`
   align-self: flex-end;
 `

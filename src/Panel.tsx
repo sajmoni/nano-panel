@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { type ReactNode, useEffect, useState } from 'react'
 import { createStoredValue } from 'typed-ls'
 import styled, { css } from 'styled-components'
 import Color from './internal/color'
@@ -106,8 +106,8 @@ const savedLocked = createStoredValue('locked', true)
 export const Panel = ({
   children,
   width = 250,
-  orientation = 'left',
-}: {
+}: // orientation = 'left',
+{
   children: ReactNode
   width?: number
   orientation?: 'left' | 'right'

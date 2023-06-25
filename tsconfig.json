@@ -1,16 +1,5 @@
 {
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "strict": true,
-    "esModuleInterop": true,
-    "declaration": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
-  },
+  "extends": "tsconfig-one/tsconfig.json",
+  "compilerOptions": { "outDir": "dist", "jsx": "preserve" },
   "include": ["src"]
 }
