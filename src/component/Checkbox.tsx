@@ -2,11 +2,11 @@ import styled from 'styled-components'
 // import handleTextOverflow from '../internal/handleTextOverflow'
 import Label from '../internal/Label'
 
-const StyledCheckbox = styled.div`
+const StyledCheckbox = styled.div<{ checked: boolean }>`
   width: 14px;
   height: 14px;
 
-  border: 3px solid darkgray;
+  border: 3px solid ${({ checked }) => (checked ? '#efefef' : 'darkgrey')};
   border-radius: 5px;
 
   display: flex;
@@ -19,7 +19,7 @@ const StyledCheckbox = styled.div`
 const EnabledIndicator = styled.div<{ checked: boolean }>`
   width: 8px;
   height: 8px;
-  background-color: ${({ checked }) => (checked ? 'darkgray' : 'transparent')};
+  background-color: ${({ checked }) => (checked ? '#efefef' : 'transparent')};
 `
 
 const CheckboxContainer = styled.div`
@@ -44,6 +44,7 @@ const Checkbox = ({
 }) => {
   return (
     <CheckboxContainer
+      id={'checkbox'}
       onClick={() => {
         const newValue = !checked
         onClick(newValue)
@@ -51,7 +52,7 @@ const Checkbox = ({
       title={description}
     >
       <Label>{label}</Label>
-      <StyledCheckbox>
+      <StyledCheckbox checked={checked}>
         <EnabledIndicator checked={checked} />
       </StyledCheckbox>
     </CheckboxContainer>

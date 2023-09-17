@@ -1,4 +1,4 @@
-import { useState, StrictMode } from 'react'
+import React, { useState, StrictMode } from 'react'
 import {
   Panel,
   NumericValue,

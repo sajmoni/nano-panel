@@ -1,8 +1,9 @@
 import { type ReactNode, useEffect, useState } from 'react'
 import { createStoredValue } from 'typed-ls'
 import styled, { css } from 'styled-components'
-import Color from './internal/color'
 import { Resizable } from 're-resizable'
+
+import Color from './internal/color'
 import { LockClosedIcon, LockOpenIcon } from './icon'
 
 const Overlay = styled.div`
