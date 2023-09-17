@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/sajmoni/nano-panel.git"
   },
+  "engines": {
+    "node": ">=20"
+  },
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
