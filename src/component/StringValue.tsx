@@ -35,6 +35,7 @@ const StyledValue = styled.div`
   ${handleTextOverflow};
 `
 
+// TODO: Rename these to String and Number?
 const StringValue = ({
   label,
   getValue,

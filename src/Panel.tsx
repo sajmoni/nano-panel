@@ -2,6 +2,8 @@ import { type ReactNode, useEffect, useState } from 'react'
 import { createStoredValue } from 'typed-ls'
 import styled, { css } from 'styled-components'
 import Color from './internal/color'
+import { Resizable } from 're-resizable'
+import { LockClosedIcon, LockOpenIcon } from './icon'
 
 const Overlay = styled.div`
   position: absolute;
@@ -9,15 +11,18 @@ const Overlay = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 99;
+  z-index: 999;
 `
 
-const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
-  box-sizing: border-box;
-  width: ${({ width, isMinimized }) => (isMinimized ? 'auto' : `${width}px`)};
-  height: ${({ isMinimized }) => (isMinimized ? 'auto' : '100%')};
+const OuterContainer = styled.div<{ $isMinimized: boolean }>`
   position: absolute;
   top: 0px;
+  height: ${({ $isMinimized }) => ($isMinimized ? 'auto' : '100%')};
+  z-index: 9999;
+`
+
+const StyledContainer = styled.div`
+  box-sizing: border-box;
   padding: 5px;
 
   background-color: ${Color.GREEN_DARK};
@@ -31,6 +36,8 @@ const StyledContainer = styled.div<{ width: number; isMinimized: boolean }>`
   flex-direction: column;
 
   z-index: 100;
+
+  height: 100%;
 `
 
 const MinimizeButton = styled.button`
@@ -40,8 +47,8 @@ const MinimizeButton = styled.button`
   font-size: 12px;
 `
 
-const LockButton = styled.div<{ isVisible: boolean }>`
-  ${({ isVisible }) => setVisibility(isVisible)}
+const LockButton = styled.div<{ $isVisible: boolean }>`
+  ${({ $isVisible }) => setVisibility($isVisible)}
   cursor: pointer;
   user-select: none;
 `
@@ -56,32 +63,6 @@ const SvgContainer = styled.div`
   margin: 0px 4px 0px 12px;
 `
 
-const LockClosedIcon = () => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    className='h-5 w-5'
-    viewBox='0 0 20 20'
-    fill='currentColor'
-  >
-    <path
-      fillRule='evenodd'
-      d='M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z'
-      clipRule='evenodd'
-    />
-  </svg>
-)
-
-const LockOpenIcon = () => (
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    className='h-5 w-5'
-    viewBox='0 0 20 20'
-    fill='currentColor'
-  >
-    <path d='M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z' />
-  </svg>
-)
-
 const setVisibility = (isVisible: boolean) =>
   isVisible
     ? 'visibility: visible;'
@@ -91,8 +72,8 @@ const setVisibility = (isVisible: boolean) =>
         height: 0;
       `
 
-const ChildrenContainer = styled.div<{ isVisible: boolean }>`
-  ${({ isVisible }) => setVisibility(isVisible)}
+const ChildrenContainer = styled.div<{ $isVisible: boolean }>`
+  ${({ $isVisible }) => setVisibility($isVisible)}
 `
 
 const TopRow = styled.div`
@@ -102,10 +83,12 @@ const TopRow = styled.div`
 
 const savedMinimized = createStoredValue('minimized', false)
 const savedLocked = createStoredValue('locked', true)
+// TODO: Use new typed-ls without default?
+const savedWidth = createStoredValue('width', 250)
 
 export const Panel = ({
-  children,
-  width = 250,
+  children, // TODO?
+  // defaultWidth = 250,
 }: // orientation = 'left',
 {
   children: ReactNode
@@ -115,60 +98,18 @@ export const Panel = ({
   const [isMinimized, setIsMinimized] = useState(true)
   const [hasLoaded, setHasLoaded] = useState(false)
   const [isLocked, setIsLocked] = useState(false)
+  const [width, setWidth] = useState(250)
 
   useEffect(() => {
+    // TODO: Better react API for this built into typed-ls?
     setIsMinimized(savedMinimized.get())
     setIsLocked(savedLocked.get())
+    setWidth(savedWidth.get())
     setHasLoaded(true)
   }, [])
 
   return (
     <>
-      <StyledContainer
-        width={width}
-        isMinimized={isMinimized}
-      >
-        {hasLoaded ? (
-          <TopRow>
-            <MinimizeButton
-              onClick={() => {
-                setIsMinimized(!isMinimized)
-                savedMinimized.set(!isMinimized)
-              }}
-            >
-              {isMinimized ? 'Show debug' : 'Hide'}
-            </MinimizeButton>
-            <LockButton
-              onClick={() => {
-                setIsLocked(!isLocked)
-                savedLocked.set(!isMinimized)
-              }}
-              isVisible={!isMinimized}
-            >
-              <LockContainer>
-                {isLocked ? (
-                  <>
-                    <SvgContainer>
-                      <LockClosedIcon />
-                    </SvgContainer>
-                    <div>Locked</div>
-                  </>
-                ) : (
-                  <>
-                    <SvgContainer>
-                      <LockOpenIcon />
-                    </SvgContainer>
-                    <div>Unlocked</div>
-                  </>
-                )}
-              </LockContainer>
-            </LockButton>
-          </TopRow>
-        ) : null}
-        <ChildrenContainer isVisible={!isMinimized}>
-          {children}
-        </ChildrenContainer>
-      </StyledContainer>
       {!isMinimized && !isLocked ? (
         <Overlay
           onClick={() => {
@@ -176,6 +117,76 @@ export const Panel = ({
           }}
         />
       ) : null}
+      <OuterContainer
+        $isMinimized={isMinimized}
+        id='nano-panel'
+      >
+        <Resizable
+          size={{ width: isMinimized ? 'auto' : width, height: '100%' }}
+          enable={{
+            top: false,
+            right: !isMinimized,
+            bottom: false,
+            left: false,
+            topRight: false,
+            bottomRight: false,
+            bottomLeft: false,
+            topLeft: false,
+          }}
+          minWidth={150}
+          maxWidth={600}
+          onResizeStop={(_event, _direction, _ref, d) => {
+            const newWidth = width + d.width
+            setWidth(newWidth)
+            savedWidth.set(newWidth)
+          }}
+        >
+          <StyledContainer>
+            {hasLoaded ? (
+              <TopRow>
+                <MinimizeButton
+                  onClick={() => {
+                    const newValue = !isMinimized
+                    setIsMinimized(newValue)
+                    savedMinimized.set(newValue)
+                  }}
+                >
+                  {isMinimized ? 'Show debug' : 'Hide'}
+                </MinimizeButton>
+                <LockButton
+                  onClick={() => {
+                    const newValue = !isLocked
+                    setIsLocked(newValue)
+                    savedLocked.set(newValue)
+                  }}
+                  $isVisible={!isMinimized}
+                >
+                  <LockContainer>
+                    {isLocked ? (
+                      <>
+                        <SvgContainer>
+                          <LockClosedIcon />
+                        </SvgContainer>
+                        <div>Locked</div>
+                      </>
+                    ) : (
+                      <>
+                        <SvgContainer>
+                          <LockOpenIcon />
+                        </SvgContainer>
+                        <div>Unlocked</div>
+                      </>
+                    )}
+                  </LockContainer>
+                </LockButton>
+              </TopRow>
+            ) : null}
+            <ChildrenContainer $isVisible={!isMinimized}>
+              {children}
+            </ChildrenContainer>
+          </StyledContainer>
+        </Resizable>
+      </OuterContainer>
     </>
   )
 }
