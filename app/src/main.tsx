@@ -1,4 +1,4 @@
-import React, { useState, StrictMode } from 'react'
+import { useState, StrictMode } from 'react'
 import {
   Panel,
   NumericValue,
@@ -15,19 +15,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 
-const appRoot = createRoot(document.getElementById('root') as HTMLElement)
-appRoot.render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
-
 const mockExternalState = {
   timesClicked: 1,
 }
 
 const DebugPanel = () => {
-  const [timesClicked, setTimesClicked] = useState(0)
   const [isChecked, setIsChecked] = useState(false)
   const [showSnackbar, setShowSnackbar] = useState(false)
   const [dropDownValue, setDropdownValue] = useState('1')
@@ -94,5 +86,10 @@ const DebugPanel = () => {
   )
 }
 
-const root = createRoot(document.getElementById('debug-panel') as HTMLElement)
-root.render(<DebugPanel />)
+const appRoot = createRoot(document.getElementById('root') as HTMLElement)
+appRoot.render(
+  <StrictMode>
+    <DebugPanel />
+    <App />
+  </StrictMode>,
+)

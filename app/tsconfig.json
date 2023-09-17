@@ -1,5 +1,5 @@
 {
   "extends": "tsconfig-one/tsconfig.json",
-  "compilerOptions": { "outDir": "dist", "lib": ["DOM"], "jsx": "react" },
+  "compilerOptions": { "outDir": "dist", "lib": ["DOM"] },
   "include": ["src"]
 }
