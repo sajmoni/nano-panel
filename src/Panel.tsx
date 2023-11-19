@@ -89,8 +89,8 @@ const savedWidth = createStoredValue('width', 250)
 
 export const Panel = ({
   children, // TODO?
-  // defaultWidth = 250,
-}: // orientation = 'left',
+} // defaultWidth = 250,
+: // orientation = 'left',
 {
   children: ReactNode
   width?: number
