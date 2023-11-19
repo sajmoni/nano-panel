@@ -9,6 +9,7 @@ import {
   Dropdown,
   Input,
   Snackbar,
+  Row,
 } from '../../dist'
 import { createRoot } from 'react-dom/client'
 
@@ -31,12 +32,38 @@ const DebugPanel = () => {
         getValue={() => 'world'}
       />
       <Divider />
-      <Button
-        label='Click me'
-        onClick={() => {
-          mockExternalState.timesClicked += 1
-        }}
-      />
+      <Row>
+        <Button
+          label='Click me'
+          onClick={() => {
+            mockExternalState.timesClicked += 1
+          }}
+        />
+        <Button
+          label='Another button'
+          onClick={() => {
+            // No-op
+          }}
+        />
+        <Button
+          label='Another button'
+          onClick={() => {
+            // No-op
+          }}
+        />
+        <Button
+          label='Another button'
+          onClick={() => {
+            // No-op
+          }}
+        />
+        <Button
+          label='Another button'
+          onClick={() => {
+            // No-op
+          }}
+        />
+      </Row>
       <NumericValue
         label={'Times clicked'}
         getValue={() => mockExternalState.timesClicked}
