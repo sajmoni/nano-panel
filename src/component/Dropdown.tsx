@@ -20,11 +20,11 @@ const DropdownContainer = styled.div`
   background-color: ${Color.GREEN_DARK};
 `
 
-const StyledDropdownItem = styled.div<{ bold: boolean }>`
+const StyledDropdownItem = styled.div<{ $bold: boolean }>`
   cursor: pointer;
   margin: 2px;
 
-  ${({ bold }) => (bold ? 'font-weight: bold;' : undefined)}
+  ${({ $bold }) => ($bold ? 'font-weight: bold;' : undefined)}
   &:hover {
     opacity: 0.5;
   }
@@ -112,7 +112,7 @@ const Dropdown = <T extends string | number>({
             {items.map((item) => {
               return (
                 <StyledDropdownItem
-                  bold={item.value === value}
+                  $bold={item.value === value}
                   key={item.value}
                   onClick={() => {
                     onChange(item.value as T)
